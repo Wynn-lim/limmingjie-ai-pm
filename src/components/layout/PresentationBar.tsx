@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import { chapters } from "../../content/portfolio";
 import { screens, screenMinutes } from "../../content/scripts";
 import { usePresentation } from "../../presentation/PresentationContext";
@@ -7,6 +8,13 @@ const modeLabel = {
   standard: "15分钟标准模式",
   quick: "8分钟精简模式",
 } as const;
+
+const detailLabel: Record<string, string> = {
+  "/case/content-system": "详情页 · 企业AI内容生产体系",
+  "/case/ai-director": "详情页 · AI 编导工作台",
+  "/case/rag-expert": "详情页 · 研发费合规专家",
+  "/appendix/product-os": "附加内容 · AI Product Leader OS",
+};
 
 export default function PresentationBar() {
   const {
@@ -23,17 +31,23 @@ export default function PresentationBar() {
     prev,
     next,
   } = usePresentation();
+  const location = useLocation();
 
   const screen = screens[activeIndex];
   const chapter = chapters.find((c) => c.id === screen?.chapterId);
   const pos = visibleScreens.findIndex((s) => s.id === activeScreenId);
+  const detail = detailLabel[location.pathname];
 
   return (
     <div className="pbar">
       <div className="shell pbar__inner">
         <div style={{ minWidth: 0 }}>
           <div className="pbar__now">
-            {chapter ? `${String(chapter.index).padStart(2, "0")} · ${chapter.nav}` : "总览"}
+            {detail
+              ? detail
+              : chapter
+                ? `${String(chapter.index).padStart(2, "0")} · ${chapter.nav}`
+                : "总览"}
           </div>
           <div className="pbar__meta">
             {modeLabel[mode]}

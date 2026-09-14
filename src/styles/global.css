@@ -218,6 +218,8 @@ a:hover {
   border: 1px solid transparent;
   font-size: 15px;
   font-weight: 650;
+  white-space: nowrap;
+  flex: 0 0 auto;
   transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
 }
 
@@ -297,7 +299,7 @@ a:hover {
   height: var(--header-h);
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 18px;
 }
 
 .brand {
@@ -325,16 +327,23 @@ a:hover {
   gap: 2px;
   flex: 1 1 auto;
   min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.nav::-webkit-scrollbar {
+  display: none;
 }
 
 .nav__item {
-  font-size: 13.5px;
+  font-size: 12.8px;
   font-weight: 600;
   color: var(--ink-2);
-  padding: 6px 10px;
+  padding: 6px 8px;
   border-radius: var(--radius-s);
   white-space: nowrap;
-  position: relative;
+  flex: 0 0 auto;
 }
 
 .nav__item:hover {
@@ -802,9 +811,12 @@ a:hover {
 }
 
 .video-card video {
-  width: 100%;
-  aspect-ratio: 9 / 16;
-  max-height: 62vh;
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 74vh;
+  margin-inline: auto;
   background: #000;
   object-fit: contain;
 }
@@ -1231,6 +1243,10 @@ a:hover {
 /* ============================================================
    响应式
    ============================================================ */
+@media (max-width: 1460px) {
+  .brand__role { display: none; }
+}
+
 @media (max-width: 1180px) {
   .nav__item { font-size: 13px; padding: 6px 8px; }
   .proof-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1251,6 +1267,22 @@ a:hover {
   .brand__role { display: none; }
   .col-4, .col-5, .col-6, .col-7, .col-8 { grid-column: span 12; }
   .grid-12 { gap: 16px; }
+
+  /* 窄屏控制条换行，按钮横向滚动，避免文字被压成竖排 */
+  .pbar__inner {
+    flex-wrap: wrap;
+    row-gap: 8px;
+    padding-block: 10px;
+  }
+  .pbar__now { max-width: 100%; white-space: normal; }
+  .pbar__track { order: 3; flex-basis: 100%; min-width: 100%; }
+  .pbar__actions {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .pbar__actions::-webkit-scrollbar { display: none; }
 
   /* 提词在窄屏改为底部面板 */
   .notes,
@@ -1274,6 +1306,16 @@ a:hover {
   .proof-grid { grid-template-columns: minmax(0, 1fr); }
   .hero { padding-block: 36px 32px; }
   .section { padding-block: 32px; }
+
+  /* 窄屏允许按钮文案换行，避免长标签把页面撑出横向滚动 */
+  .btn {
+    white-space: normal;
+    text-align: center;
+    max-width: 100%;
+    line-height: 1.4;
+    padding-block: 8px;
+  }
+  .faq { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

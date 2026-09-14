@@ -43,15 +43,19 @@ test.describe("面试作品集验收", () => {
   test("15 分钟标准模式：提词、进度、键盘切换都正常", async ({ page }) => {
     await page.getByRole("button", { name: "开始15分钟介绍" }).click();
     await expect(page.getByLabel("这一页怎么讲")).toBeVisible();
-    await expect(page.getByText(/全程建议约 15 分钟/)).toBeVisible();
+    const meta = page.locator(".pbar__meta");
+    await expect(meta).toContainText("全程建议约 15 分钟");
+    await expect(meta).toContainText("第 1 / 14 屏");
 
-    const before = await page.locator(".pbar__now").innerText();
     await page.keyboard.press("ArrowRight");
-    await expect
-      .poll(async () => page.locator(".pbar__now").innerText(), { timeout: 5000 })
-      .not.toBe(before);
+    await expect(meta).toContainText("第 2 / 14 屏");
 
     await page.keyboard.press(" ");
+    await expect(meta).toContainText("第 3 / 14 屏");
+
+    await page.keyboard.press("ArrowLeft");
+    await expect(meta).toContainText("第 2 / 14 屏");
+
     await expect(page.getByRole("progressbar", { name: "整体进度" })).toBeVisible();
   });
 
@@ -72,8 +76,11 @@ test.describe("面试作品集验收", () => {
     await page.getByRole("button", { name: "对方可能会问" }).click();
     const dialog = page.getByRole("dialog", { name: "对方可能会问" });
     await expect(dialog).toBeVisible();
-    await dialog.getByRole("button", { name: /为什么用 Agent/ }).click();
-    await expect(dialog.getByText(/15 秒直接回答/).first()).toBeVisible();
+    // 首题默认展开
+    await expect(dialog.getByText("15 秒直接回答").first()).toBeVisible();
+    // 展开另一题
+    await dialog.getByRole("button", { name: /3C 内容工作流具体怎么实现/ }).click();
+    await expect(dialog.getByText(/分十步：资料输入/)).toBeVisible();
     await dialog.getByRole("button", { name: "关闭并回到刚才那一屏" }).click();
     await expect(dialog).toHaveCount(0);
   });

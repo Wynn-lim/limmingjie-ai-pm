@@ -218,7 +218,7 @@ export default function HomePage() {
         <div className="section__block">
           <div className="btn-row">
             <Link className="btn btn--primary" to="/case/content-system">
-              查看完整案例（背景 / 流程 / 账号矩阵 / 数据口径）
+              查看完整案例（10 个部分）
             </Link>
             <span style={{ fontSize: 13.5, color: "var(--ink-3)" }}>
               详情页保留上一节 / 下一节与提词入口，返回时回到这一屏。
