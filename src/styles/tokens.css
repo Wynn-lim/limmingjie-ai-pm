@@ -1,0 +1,58 @@
+/* ============================================================
+   设计令牌 —— 高级商业案例型（暖白 / 深灰 / 深海军蓝 / 少量荧光绿）
+   ============================================================ */
+:root {
+  /* 表面 */
+  --paper: #f7f7f4;
+  --surface: #ffffff;
+  --surface-2: #f1f1eb;
+  --surface-3: #e9e9e1;
+
+  /* 文字 */
+  --ink: #1b1e22;
+  --ink-2: #474d55;
+  --ink-3: #7b838c;
+
+  /* 主色 */
+  --navy: #0f2035;
+  --navy-2: #1a3454;
+  --navy-soft: #e8edf3;
+
+  /* 强调色：荧光绿只用于关键结论、流程状态和交互反馈 */
+  --accent: #b8f02e;
+  --accent-strong: #9adb0f;
+  --accent-ink: #3c5a00;
+  --accent-wash: #f0fbd6;
+
+  /* 状态色（克制使用） */
+  --warn: #b45309;
+  --warn-wash: #fdf3e3;
+
+  --line: #e0e0d8;
+  --line-strong: #c9c9bf;
+
+  /* 尺寸 */
+  --shell: 1280px;
+  --gutter: 40px;
+  --radius-s: 3px;
+  --radius-m: 6px;
+  --radius-l: 10px;
+
+  --shadow-s: 0 1px 2px rgba(15, 32, 53, 0.06);
+  --shadow-m: 0 6px 20px rgba(15, 32, 53, 0.08);
+  --shadow-l: 0 18px 48px rgba(15, 32, 53, 0.14);
+
+  /* 字号（笔记本当面展示优先） */
+  --fs-display: clamp(30px, 3.1vw, 46px);
+  --fs-h2: clamp(22px, 2.0vw, 30px);
+  --fs-h3: 18px;
+  --fs-body: 16.5px;
+  --fs-small: 14.5px;
+  --fs-mini: 13px;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  --header-h: 60px;
+}
