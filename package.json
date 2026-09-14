@@ -6,11 +6,12 @@
   "description": "LMJ AI PM Portfolio · WorkBuddy Edition",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "npm run qr && tsc --noEmit && vite build",
+    "build": "npm run qr && npm run sizes && tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "qr": "node scripts/generate-qr.mjs",
     "test": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "sizes": "node scripts/generate-image-sizes.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",

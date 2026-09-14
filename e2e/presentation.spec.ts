@@ -42,7 +42,7 @@ test.describe("面试作品集验收", () => {
 
   test("15 分钟标准模式：提词、进度、键盘切换都正常", async ({ page }) => {
     await page.getByRole("button", { name: "开始15分钟介绍" }).click();
-    await expect(page.getByLabel("这一页怎么讲")).toBeVisible();
+    await expect(page.getByLabel("讲解要点")).toBeVisible();
     const meta = page.locator(".pbar__meta");
     await expect(meta).toContainText("全程建议约 15 分钟");
     await expect(meta).toContainText("第 1 / 14 屏");
@@ -69,7 +69,7 @@ test.describe("面试作品集验收", () => {
   });
 
   test("普通浏览模式默认不显示提词", async ({ page }) => {
-    await expect(page.getByLabel("这一页怎么讲")).toHaveCount(0);
+    await expect(page.getByLabel("讲解要点")).toHaveCount(0);
   });
 
   test("FAQ 抽屉可开可关", async ({ page }) => {
@@ -81,7 +81,7 @@ test.describe("面试作品集验收", () => {
     // 展开另一题
     await dialog.getByRole("button", { name: /3C 内容工作流具体怎么实现/ }).click();
     await expect(dialog.getByText(/分十步：资料输入/)).toBeVisible();
-    await dialog.getByRole("button", { name: "关闭并回到刚才那一屏" }).click();
+    await dialog.getByRole("button", { name: "关闭" }).click();
     await expect(dialog).toHaveCount(0);
   });
 

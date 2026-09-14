@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePresentation } from "../../presentation/PresentationContext";
 import { screens } from "../../content/scripts";
 
@@ -6,6 +6,7 @@ interface SectionProps {
   /** 对应 screens 中的 id，用于演示导航与提词 */
   id: string;
   no?: string;
+  eyebrow?: string;
   title?: string;
   conclusion?: string;
   children: ReactNode;
@@ -22,6 +23,7 @@ interface SectionProps {
 export default function Section({
   id,
   no,
+  eyebrow,
   title,
   conclusion,
   children,
@@ -32,6 +34,8 @@ export default function Section({
   const { mode, activeScreenId, setActiveByScroll } = usePresentation();
   const screen = screens.find((s) => s.id === id);
   const quick = screen?.inQuick ?? true;
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     const el = document.getElementById(id);
@@ -48,6 +52,30 @@ export default function Section({
     return () => observer.disconnect();
   }, [id, setActiveByScroll]);
 
+  /** 轻量淡入；不支持 IntersectionObserver 时直接显示，并有兜底超时 */
+  useEffect(() => {
+    const el = bodyRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setRevealed(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setRevealed(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px" },
+    );
+    io.observe(el);
+    const safety = window.setTimeout(() => setRevealed(true), 1600);
+    return () => {
+      io.disconnect();
+      window.clearTimeout(safety);
+    };
+  }, []);
+
   const cls = [
     bare ? "" : "section",
     tight ? "section--tight" : "",
@@ -58,19 +86,35 @@ export default function Section({
     .join(" ");
 
   return (
-    <section id={id} data-quick={quick ? "true" : "false"} className={cls} aria-label={title ?? id}>
+    <section
+      id={id}
+      data-quick={quick ? "true" : "false"}
+      className={cls}
+      aria-label={title ?? id}
+    >
       {bare ? (
-        children
+        <div ref={bodyRef} data-reveal className={revealed ? "is-in" : undefined}>
+          {children}
+        </div>
       ) : (
         <div className="shell">
-          {(no || title) && (
-            <div className="section__head">
-              {no && <span className="section__no">{no}</span>}
-              {title && <h2 className="section__title">{title}</h2>}
-            </div>
-          )}
-          {conclusion && <p className="section__conclusion">{conclusion}</p>}
-          {children}
+          <div ref={bodyRef} data-reveal {...(revealed ? { className: "is-in" } : {})}>
+            {(no || title) && (
+              <header className={no ? "sec-head" : "sec-head sec-head--solo"}>
+                {no && (
+                  <div className="sec-head__no" aria-hidden="true">
+                    {no}
+                  </div>
+                )}
+                <div className="sec-head__main">
+                  {eyebrow && <div className="eyebrow">{eyebrow}</div>}
+                  {title && <h2 className="sec-head__title">{title}</h2>}
+                  {conclusion && <p className="sec-head__conclusion">{conclusion}</p>}
+                </div>
+              </header>
+            )}
+            {children}
+          </div>
         </div>
       )}
     </section>

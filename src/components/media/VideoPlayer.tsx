@@ -17,11 +17,21 @@ interface VideoItem {
 export default function VideoPlayer({ item }: { item: VideoItem }) {
   return (
     <div className="video-card">
+      <div className="video-card__bar">
+        <span className="frame__dots" aria-hidden="true">
+          <span className="frame__dot" />
+          <span className="frame__dot" />
+          <span className="frame__dot" />
+        </span>
+        <span className="video-card__slug">{item.spec}</span>
+      </div>
       <video
         controls
         playsInline
         preload="metadata"
         poster={asset(item.poster)}
+        width={720}
+        height={1280}
         aria-label={item.title}
         data-testid={`video-${item.id}`}
       >
@@ -34,14 +44,13 @@ export default function VideoPlayer({ item }: { item: VideoItem }) {
       </video>
       <div className="video-card__body">
         <h3 className="video-card__title">{item.title}</h3>
-        <p className="video-card__spec">{item.spec}</p>
         <p className="video-card__caption">{item.caption}</p>
         <p className="video-fallback">
-          若视频无法加载，页面仍保留封面与说明；也可点击{" "}
+          如视频无法播放，可
           <a href={asset(item.src)} target="_blank" rel="noopener noreferrer">
-            在这里
-          </a>{" "}
-          直接打开视频文件。
+            打开视频文件
+          </a>
+          。
         </p>
       </div>
     </div>

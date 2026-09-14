@@ -39,8 +39,15 @@ export default function SiteHeader() {
     <header className="site-header">
       <div className="shell site-header__inner">
         <Link to="/" className="brand" onClick={() => scrollToScreen("s-hero")}>
-          <span className="brand__name">李明杰</span>
-          <span className="brand__role">AI产品经理面试作品集</span>
+          <span className="brand__mark" aria-hidden="true">
+            LM
+          </span>
+          <span>
+            <span className="brand__name">李明杰</span>
+            <span className="brand__role" style={{ display: "block" }}>
+              AI产品经理面试作品集
+            </span>
+          </span>
         </Link>
 
         <nav className="nav" aria-label="六个主章节">

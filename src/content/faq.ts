@@ -113,4 +113,4 @@ export const faq: FaqEntry[] = [
   },
 ];
 
-export const faqIntro = "每题都准备了简洁版和完整版，点击展开。关闭后会回到你刚才讲的那一屏。";
+export const faqIntro = "每题两版：先看简洁版，需要展开时看完整版。";

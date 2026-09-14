@@ -15,11 +15,11 @@ describe("抖音代表作品卡", () => {
     expect(link.getAttribute("rel")).toContain("noreferrer");
   });
 
-  it("提供二维码与扫码提示，并说明不是账号主页", () => {
+  it("提供二维码与扫码提示", () => {
     render(<DouyinWorkCard work={work} />);
     expect(screen.getByAltText(`${work.workTitle} 二维码`)).toBeInTheDocument();
     expect(screen.getByText(/如网页无法播放，可使用抖音扫码观看。/)).toBeInTheDocument();
-    expect(screen.getByText(/不是账号主页/)).toBeInTheDocument();
+    expect(screen.getByText(/封面为账号内容截图（截图时数据）。/)).toBeInTheDocument();
   });
 
   it("按钮文案不得写成「进入账号主页」", () => {

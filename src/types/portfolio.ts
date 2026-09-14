@@ -63,7 +63,7 @@ export interface CaseBeat {
   did: string;
   /** 为什么这样设计 */
   why: string;
-  /** 这一页怎么讲 */
+  /** 讲解要点（演示模式下才显示） */
   say: string;
 }
 

@@ -36,7 +36,7 @@ export default function FaqDrawer() {
         <div className="faq__head">
           <span className="faq__title">对方可能会问</span>
           <button type="button" className="btn btn--ghost btn--sm" onClick={closeFaq}>
-            关闭并回到刚才那一屏
+            关闭
           </button>
         </div>
         <div className="faq__body">

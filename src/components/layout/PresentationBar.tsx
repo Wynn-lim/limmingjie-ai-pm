@@ -101,22 +101,23 @@ export default function PresentationBar() {
             </option>
           </select>
 
-          <button type="button" className="btn btn--ghost btn--sm" onClick={prev}>
-            上一节
-          </button>
-          <button type="button" className="btn btn--ghost btn--sm" onClick={next}>
-            下一节
-          </button>
-
           {mode !== "browse" && (
-            <button
-              type="button"
-              className="btn btn--accent btn--sm"
-              onClick={toggleNotes}
-              aria-pressed={notes !== "hidden"}
-            >
-              {notes === "hidden" ? "显示提词" : notes === "open" ? "缩小提词" : "隐藏提词"}
-            </button>
+            <>
+              <button type="button" className="btn btn--ghost btn--sm" onClick={prev}>
+                上一节
+              </button>
+              <button type="button" className="btn btn--ghost btn--sm" onClick={next}>
+                下一节
+              </button>
+              <button
+                type="button"
+                className="btn btn--accent btn--sm"
+                onClick={toggleNotes}
+                aria-pressed={notes !== "hidden"}
+              >
+                {notes === "hidden" ? "显示提词" : notes === "open" ? "缩小提词" : "隐藏提词"}
+              </button>
+            </>
           )}
 
           <button type="button" className="btn btn--ghost btn--sm" onClick={openFaq}>

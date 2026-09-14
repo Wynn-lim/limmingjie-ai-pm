@@ -18,10 +18,10 @@ export default function SpeakerNotes() {
   return (
     <aside
       className={notes === "mini" ? "notes notes--mini" : "notes"}
-      aria-label="这一页怎么讲"
+      aria-label="讲解要点"
     >
       <div className="notes__head">
-        <span className="notes__label">这一页怎么讲</span>
+        <span className="notes__label">讲解要点</span>
         <button
           type="button"
           className="btn btn--ghost btn--sm"

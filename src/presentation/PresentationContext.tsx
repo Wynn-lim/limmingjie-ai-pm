@@ -54,6 +54,14 @@ export function PresentationProvider({ children }: { children: ReactNode }) {
   const [notes, setNotes] = useState<NotesState>("hidden");
   const [faqOpen, setFaqOpen] = useState(false);
   const pendingRestoreRef = useRef<string | null>(null);
+  /**
+   * 程序化跳转期间锁住「滚动联动」。
+   * 否则平滑滚动经过中间的屏时，IntersectionObserver 会把当前屏改回去。
+   */
+  const scrollLockRef = useRef(0);
+  const lockScroll = useCallback(() => {
+    scrollLockRef.current = Date.now() + 900;
+  }, []);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -64,10 +72,14 @@ export function PresentationProvider({ children }: { children: ReactNode }) {
 
   const activeScreenId = screens[activeIndex]?.id ?? screens[0].id;
 
-  const scrollToScreen = useCallback((id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ block: "start", behavior: "smooth" });
-  }, []);
+  const scrollToScreen = useCallback(
+    (id: string) => {
+      lockScroll();
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ block: "start", behavior: "smooth" });
+    },
+    [lockScroll],
+  );
 
   const goTo = useCallback(
     (index: number) => {
@@ -166,6 +178,7 @@ export function PresentationProvider({ children }: { children: ReactNode }) {
   }, [activeScreenId, navigate]);
 
   const setActiveByScroll = useCallback((id: string) => {
+    if (Date.now() < scrollLockRef.current) return;
     setActiveIndex((cur) => {
       const idx = SCREEN_IDS.indexOf(id);
       return idx >= 0 && idx !== cur ? idx : cur;

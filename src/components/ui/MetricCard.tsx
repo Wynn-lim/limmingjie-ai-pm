@@ -22,13 +22,12 @@ export default function MetricCard({
   showStatus?: boolean;
 }) {
   return (
-    <div className="metric">
+    <div className="metric" data-status={metric.status}>
       <div className={size === "lg" ? "metric__value" : "metric__value metric__value--sm"}>
         {metric.value}
       </div>
       <div className="metric__label">
         {metric.label}
-        {showStatus ? " " : ""}
         {showStatus && <EvidenceChip status={metric.status} />}
       </div>
       <div className="metric__scope">口径：{metric.scope}</div>

@@ -69,10 +69,9 @@ export default function CaseDetail({
         </div>
 
         <div className="detail__section">
-          <h2 className="block-title">按讲解顺序排列的 {study.beats.length} 个节点</h2>
+          <h2 className="block-title">按使用顺序拆解</h2>
           <p className="note" style={{ marginBottom: 8 }}>
-            每张截图都标注了：这一屏是什么、解决什么问题、我做了什么、为什么这样设计、这一页怎么讲。
-            主要信息不放大也能读懂，点击图片可放大并用左右方向键切换。
+            每一步在做什么、原本卡在哪里、我做了哪些判断，都写在对应截图旁边。
           </p>
           {study.beats.map((b, i) => (
             <BeatCard beat={b} index={i + 1} key={b.id} />
@@ -81,7 +80,7 @@ export default function CaseDetail({
 
         {study.deepDive && study.deepDive.length > 0 && (
           <div className="detail__section">
-            <h2 className="block-title">深挖区（应对 20 分钟以上追问）</h2>
+            <h2 className="block-title">补充细节</h2>
             <div className="grid-12">
               {study.deepDive.map((d) => (
                 <div className="col-4" key={d.title}>
@@ -111,26 +110,27 @@ export default function CaseDetail({
                 flexWrap: "wrap",
               }}
             >
-              <strong style={{ color: "var(--navy)" }}>查看完整长图</strong>
+              <strong style={{ color: "var(--navy)" }}>完整界面长图</strong>
               <span style={{ fontSize: 13, color: "var(--ink-3)" }}>
-                长图仅作为补充证据，讲解顺序以上面 {study.beats.length} 个节点为准。
+                原始截图全貌，可上下滚动查看。
               </span>
             </div>
             <div className="detail__full-scroll">
               <ImageZoom
-                images={[{ src: asset(study.fullImage), label: `${study.title} 完整长图` }]}
+                images={[
+                  {
+                    src: asset(study.fullImage),
+                    label: `${study.title} 完整界面长图`,
+                    sizePath: study.fullImage,
+                  },
+                ]}
               />
             </div>
           </div>
         )}
 
         <div className="detail__section">
-          <div className="btn-row">
-            {children}
-            <span style={{ fontSize: 13.5, color: "var(--ink-3)" }}>
-              返回总览后会回到原来那一屏，不会跳到页面顶部。
-            </span>
-          </div>
+          {children}
         </div>
       </div>
     </div>

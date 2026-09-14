@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
+import { sizeOf } from "../../content/imageSizes";
 
 export interface ZoomImage {
   src: string;
   label: string;
+  /** public 相对路径，用于读取原始尺寸并预留空间，避免加载时跳动 */
+  sizePath?: string;
 }
 
 /**
@@ -53,8 +56,12 @@ export default function ImageZoom({
     };
   }, [close, open, step]);
 
-  const current = images[cursor] ?? images[0];
-  if (!current) return null;
+  const first = images[index] ?? images[0];
+  const current = images[cursor] ?? first;
+  if (!first || !current) return null;
+
+  const thumbSize = sizeOf(first.sizePath ?? "");
+  const fullSize = sizeOf(current.sizePath ?? "");
 
   return (
     <>
@@ -65,13 +72,15 @@ export default function ImageZoom({
           setCursor(index);
           setOpen(true);
         }}
-        aria-label={`放大查看：${images[index]?.label ?? current.label}`}
+        aria-label={`放大查看：${first.label}`}
         style={{ display: "block", width: "100%", padding: 0, textAlign: "left" }}
       >
         <img
-          src={images[index]?.src ?? current.src}
-          alt={images[index]?.label ?? current.label}
+          src={first.src}
+          alt={first.label}
           className={imgClassName}
+          width={thumbSize?.w}
+          height={thumbSize?.h}
           loading="lazy"
         />
       </button>
@@ -80,23 +89,15 @@ export default function ImageZoom({
         <div className="lightbox" role="dialog" aria-modal="true" aria-label="图片放大查看">
           <div className="lightbox__bar">
             <span className="lightbox__title">{current.label}</span>
-            <span className="pbar__meta" style={{ color: "#9fb3c8" }}>
+            <span className="pbar__meta" style={{ color: "#93a9c0" }}>
               {cursor + 1} / {images.length}
             </span>
             {images.length > 1 && (
               <>
-                <button
-                  type="button"
-                  className="btn btn--ghost btn--sm"
-                  onClick={() => step(-1)}
-                >
+                <button type="button" className="btn btn--ghost btn--sm" onClick={() => step(-1)}>
                   上一张
                 </button>
-                <button
-                  type="button"
-                  className="btn btn--ghost btn--sm"
-                  onClick={() => step(1)}
-                >
+                <button type="button" className="btn btn--ghost btn--sm" onClick={() => step(1)}>
                   下一张
                 </button>
               </>
@@ -106,7 +107,12 @@ export default function ImageZoom({
             </button>
           </div>
           <div className="lightbox__stage">
-            <img src={current.src} alt={current.label} />
+            <img
+              src={current.src}
+              alt={current.label}
+              width={fullSize?.w}
+              height={fullSize?.h}
+            />
           </div>
         </div>
       )}

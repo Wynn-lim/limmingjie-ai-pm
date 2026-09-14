@@ -62,14 +62,14 @@ describe("顶栏与章节导航", () => {
 describe("三种演示模式", () => {
   it("默认普通浏览模式不显示提词", () => {
     renderApp();
-    expect(screen.queryByLabelText("这一页怎么讲")).toBeNull();
+    expect(screen.queryByLabelText("讲解要点")).toBeNull();
   });
 
   it("切到 15 分钟标准模式后显示提词与进度", async () => {
     const user = userEvent.setup();
     renderApp();
     await user.selectOptions(screen.getByLabelText("切换演示模式"), "standard");
-    expect(await screen.findByLabelText("这一页怎么讲")).toBeInTheDocument();
+    expect(await screen.findByLabelText("讲解要点")).toBeInTheDocument();
     expect(screen.getByRole("progressbar", { name: "整体进度" })).toBeInTheDocument();
     expect(screen.getAllByText(/全程建议约 15 分钟/).length).toBeGreaterThan(0);
   });
@@ -88,7 +88,7 @@ describe("三种演示模式", () => {
     await user.selectOptions(screen.getByLabelText("切换演示模式"), "standard");
     await user.click(screen.getByRole("button", { name: "缩小提词" }));
     await user.click(screen.getByRole("button", { name: "隐藏提词" }));
-    expect(screen.queryByLabelText("这一页怎么讲")).toBeNull();
+    expect(screen.queryByLabelText("讲解要点")).toBeNull();
   });
 
   it("方向键与空格可以切换上一节 / 下一节", async () => {
@@ -123,12 +123,12 @@ describe("预设追问抽屉", () => {
     expect(screen.getAllByText(/看流程有没有多步骤判断和跨环节依赖/).length).toBeGreaterThan(0);
   });
 
-  it("关闭按钮文案明确说明会回到刚才那一屏", async () => {
+  it("关闭按钮可以收起抽屉", async () => {
     const user = userEvent.setup();
     renderApp();
     await user.click(screen.getByRole("button", { name: "对方可能会问" }));
     const dialog = await screen.findByRole("dialog", { name: "对方可能会问" });
-    await user.click(within(dialog).getByRole("button", { name: "关闭并回到刚才那一屏" }));
+    await user.click(within(dialog).getByRole("button", { name: "关闭" }));
     expect(screen.queryByRole("dialog", { name: "对方可能会问" })).toBeNull();
   });
 });

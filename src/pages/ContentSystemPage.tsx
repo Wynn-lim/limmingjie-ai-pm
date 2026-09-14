@@ -8,6 +8,8 @@ import {
   douyinWorks,
 } from "../content/portfolio";
 import MetricCard from "../components/ui/MetricCard";
+import AccountCard from "../components/ui/AccountCard";
+import FlowRail from "../components/ui/FlowRail";
 import DouyinWorkCard from "../components/media/DouyinWorkCard";
 import ImageZoom from "../components/media/ImageZoom";
 import BackToOverview from "../components/cases/BackToOverview";
@@ -66,14 +68,7 @@ export default function ContentSystemPage() {
         {/* 04 完整工作流程 */}
         <div className="detail__section">
           <h2 className="block-title">04 完整工作流程</h2>
-          <div className="flow flow--main">
-            {contentSystem.workflow.map((s, i) => (
-              <div className="flow__step" key={s}>
-                <div className="flow__no">{String(i + 1).padStart(2, "0")}</div>
-                <div className="flow__name">{s}</div>
-              </div>
-            ))}
-          </div>
+          <FlowRail steps={contentSystem.workflow.map((name) => ({ name }))} />
           <h3 className="block-title" style={{ marginTop: 24 }}>
             关键结果
           </h3>
@@ -94,36 +89,7 @@ export default function ContentSystemPage() {
           </p>
           <div className="account-grid">
             {accounts.map((acc) => (
-              <article className="account" key={acc.id}>
-                <div className="account__shot">
-                  <img src={asset(acc.image)} alt={`${acc.name} 账号截图`} loading="lazy" />
-                </div>
-                <div className="account__body">
-                  <h3 className="account__name">{acc.name}</h3>
-                  <p className="account__pos">{acc.position}</p>
-                  <p className="account__role">我的职责：{acc.responsibility}</p>
-                  <span className="chip chip--screenshot">{acc.evidence}</span>
-                  <div className="grid-12" style={{ gap: 10 }}>
-                    {acc.metrics.map((m) => (
-                      <div className="col-6" key={m.label + m.value}>
-                        <div className="metric">
-                          <div className="metric__value metric__value--sm">{m.value}</div>
-                          <div className="metric__label">{m.label}</div>
-                          <div className="metric__scope">口径：{m.scope}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  {"note" in acc && acc.note && <p className="note">{acc.note}</p>}
-                  {"dashboard" in acc && acc.dashboard && (
-                    <div style={{ marginTop: 8 }}>
-                      <ImageZoom
-                        images={[{ src: asset(acc.dashboard), label: `${acc.name} 后台截图 2026-09-14` }]}
-                      />
-                    </div>
-                  )}
-                </div>
-              </article>
+              <AccountCard account={acc} key={acc.id} showDashboard />
             ))}
           </div>
         </div>
@@ -145,20 +111,38 @@ export default function ContentSystemPage() {
         <div className="detail__section">
           <h2 className="block-title">07 原始证据</h2>
           <p className="note" style={{ marginBottom: 16 }}>
-            以下为截图原件，可点击放大查看。原始文件保留完整信息，页面展示时按比例缩放。
+            以下为原始截图。
           </p>
           <div className="grid-12">
             {accounts.map((acc) => (
               <div className="col-6" key={`ev-${acc.id}`}>
-                <div className="card" style={{ padding: 0, overflow: "hidden" }}>
-                  <ImageZoom
-                    images={[
-                      { src: asset(acc.image), label: `${acc.name} · ${acc.evidence}` },
-                      ...("dashboard" in acc && acc.dashboard
-                        ? [{ src: asset(acc.dashboard), label: `${acc.name} · 后台截图 2026-09-14` }]
-                        : []),
-                    ]}
-                  />
+                <div className="frame">
+                  <div className="frame__bar">
+                    <span className="frame__dots" aria-hidden="true">
+                      <span className="frame__dot" />
+                      <span className="frame__dot" />
+                      <span className="frame__dot" />
+                    </span>
+                    <span className="frame__label">
+                      {acc.name} · {acc.evidence}
+                    </span>
+                  </div>
+                  <div className="frame__body">
+                    <ImageZoom
+                      images={[
+                        { src: asset(acc.image), label: `${acc.name} · ${acc.evidence}`, sizePath: acc.image },
+                        ...("dashboard" in acc && acc.dashboard
+                          ? [
+                              {
+                                src: asset(acc.dashboard),
+                                label: `${acc.name} · 后台截图 2026-09-14`,
+                                sizePath: acc.dashboard,
+                              },
+                            ]
+                          : []),
+                      ]}
+                    />
+                  </div>
                 </div>
               </div>
             ))}
@@ -170,7 +154,7 @@ export default function ContentSystemPage() {
           <h2 className="block-title">08 数据口径</h2>
           <details open>
             <summary style={{ cursor: "pointer", fontWeight: 700, color: "var(--navy)" }}>
-              展开：每一个数字是怎么算出来的
+              计算口径明细
             </summary>
             <ul style={{ marginTop: 12, color: "var(--ink-2)" }}>
               {contentSystem.metricMethod.map((m) => (
@@ -227,9 +211,6 @@ export default function ContentSystemPage() {
           </ul>
           <div className="btn-row" style={{ marginTop: 22 }}>
             <BackToOverview />
-            <span style={{ fontSize: 13.5, color: "var(--ink-3)" }}>
-              返回总览后会回到原来那一屏，不会跳到页面顶部。
-            </span>
           </div>
         </div>
       </div>

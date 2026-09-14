@@ -20,7 +20,7 @@ export const identity = {
     "我不只使用AI生成内容，更擅长理解实际业务哪里重复、哪里低效，再判断适合通过Prompt、Skill、Agent、RAG、API还是RPA解决，最终做成可以验证、复用和持续优化的工作流。",
   positionStatement:
     "我不是特别偏表达型的产品经理。我更擅长进入实际业务，把问题拆清楚，然后快速动手做出一个可验证的东西。相比只写方案，我更愿意通过原型、工作流和实际结果证明判断。",
-  hint: "建议按顺序向下展示，标准主线约15分钟。",
+  hint: "标准介绍约 15 分钟。",
   resume: "resume/lim-mingjie-ai-pm-resume.pdf",
 };
 
@@ -301,7 +301,7 @@ export const accounts = [
         status: "screenshot",
       },
     ] as Metric[],
-    note: "截图中的粉丝数与获赞数仅保留在原始截图中，不作为传播成绩单独展示。",
+    note: "该账号以作品数与全流程职责为主，粉丝数与获赞数不作为传播成绩。",
   },
   {
     id: "audit",
@@ -337,12 +337,12 @@ export const accounts = [
         status: "screenshot",
       },
     ] as Metric[],
-    note: "只展示后台截图，本站不提供该账号的外部链接。",
+    note: "只展示后台截图，不提供外部链接。",
   },
 ];
 
 export const accountTimingNote =
-  "口径说明：简历中的「3个账号」是当时统计口径。新版详情页增加了「独角鲸·神州行（全国招商版）」，该账号不作为简历统计期内的既有成果，因此首屏只写「企业AI内容矩阵」，不写账号总数。";
+  "口径说明：简历中的「3个账号」为当时统计口径。「独角鲸·神州行（全国招商版）」不属于简历统计期内的既有成果，因此单独列出，不计入账号总数。";
 
 /* ------------------------------------------------------------------ */
 /* 抖音代表作品（三条均为单条作品分享链接，不是账号主页）               */
@@ -390,10 +390,8 @@ export const douyinWorks: DouyinWork[] = [
   },
 ];
 
-export const douyinNotice =
-  "如网页无法播放，可使用抖音扫码观看。三条链接均为单条作品分享链接，不是账号主页。";
-export const douyinCoverNote =
-  "本站封面使用账号内容截图（截图时数据），不代表该条作品的原始封面。";
+export const douyinNotice = "如网页无法播放，可使用抖音扫码观看。";
+export const douyinCoverNote = "封面为账号内容截图（截图时数据）。";
 
 /* ------------------------------------------------------------------ */
 /* 音响视频（本次面试提交）                                            */
@@ -533,7 +531,7 @@ export const aiDirector: CaseStudy = {
   kicker: "MULTI-AGENT · 内容工作流",
   statusLabel: "产品Demo｜部分方法已用于实际内容生产",
   statusNote:
-    "Prompt 与内容方法部分已经用于实际工作，但整个页面 Demo 不是公司正式上线的系统。本站不提供在线运行、本地运行或录屏按钮。",
+    "Prompt 与内容方法部分已经用于实际工作，但整个页面 Demo 不是公司正式上线的系统。本次展示以界面截图为准。",
   cover: "assets/cases/ai-director/01-input.jpg",
   role: "独立产品设计 · 编导工作流设计 · 提示词与质检节点",
   summary:
@@ -638,7 +636,7 @@ export const ragExpert: CaseStudy = {
   kicker: "RAG · 领域知识库产品设计",
   statusLabel: "产品方案｜RAG页面Demo",
   statusNote:
-    "这是产品方案与页面 Demo。规划的知识库规模、准确率与效率提升都属于设计目标，不作为已经上线的结果。本站不提供在线 Demo 或运行按钮。",
+    "这是产品方案与页面 Demo。规划的知识库规模、准确率与效率提升都属于设计目标，不作为已经上线的结果。本次展示以界面截图为准。",
   cover: "assets/cases/rag/qa-home.jpg",
   role: "独立产品设计 · 业务场景定义 · 知识分层与检索方案 · PRD 与原型",
   summary:
@@ -730,7 +728,7 @@ export const ragExpert: CaseStudy = {
       title: "设计目标（不是已上线结果）",
       body: [
         "规划的知识库规模与检索准确率属于设计目标。",
-        "产品界面中的数值为界面示例，不代表本站已连接对应的知识库。",
+        "界面中的数值为示例数据，不代表已连接对应的知识库。",
         "方案中的效率提升属于预计目标，未作为已验证的运营成果。",
       ],
     },
@@ -743,7 +741,7 @@ export const productOs: CaseStudy = {
   kicker: "APPENDIX · 更多产品探索",
   statusLabel: "产品方案｜多智能体协作系统设计",
   statusNote:
-    "这是产品界面与系统设计展示。界面中的数值为示例数据，不代表实测效率。本页为附加内容，不进入 15 分钟标准主线。",
+    "这是产品界面与系统设计展示。界面中的数值为示例数据，不代表实测效率。",
   cover: "assets/cases/product-os/overview.jpg",
   role: "独立产品设计 · 多智能体系统架构",
   summary:
@@ -767,7 +765,7 @@ export const productOs: CaseStudy = {
       title: "说明",
       body: [
         "界面中的百分比、小时数等数值为界面示例数据。",
-        "不声称本站连接了可运行的服务。",
+        "该界面为设计展示，不对应可运行的服务。",
         "此页仅用于证明多角色协作、任务流与知识系统的设计能力。",
       ],
     },
@@ -857,7 +855,7 @@ export const companyProjects: CompanyProject[] = [
 ];
 
 export const geoBoundary =
-  "GEO 的正确表述：提高品牌信息被搜索、理解和引用的概率，并建立持续监测机制。不承诺必然被大模型推荐。";
+  "GEO 目标：提高品牌信息被搜索、理解和引用的概率，并建立持续监测机制。不承诺必然被大模型推荐。";
 
 /* ------------------------------------------------------------------ */
 /* 30/60/90 天计划与结尾                                               */

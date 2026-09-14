@@ -1,4 +1,5 @@
 import { asset, douyinCoverNote, douyinNotice } from "../../content/portfolio";
+import { sizeOf } from "../../content/imageSizes";
 import type { DouyinWork } from "../../types/portfolio";
 
 /**
@@ -10,7 +11,13 @@ export default function DouyinWorkCard({ work }: { work: DouyinWork }) {
   return (
     <article className="work" data-testid={`douyin-${work.id}`}>
       <div className="work__cover">
-        <img src={asset(work.cover)} alt={`${work.account} 账号内容截图`} loading="lazy" />
+        <img
+          src={asset(work.cover)}
+          alt={`${work.account} 账号内容截图`}
+          width={sizeOf(work.cover)?.w}
+          height={sizeOf(work.cover)?.h}
+          loading="lazy"
+        />
       </div>
       <div className="work__body">
         <div className="work__account">{work.account}</div>
@@ -45,7 +52,7 @@ export default function DouyinWorkCard({ work }: { work: DouyinWork }) {
           </>
         ) : (
           <p className="note" style={{ marginTop: 4 }}>
-            该账号只展示截图，本站不提供外部链接。
+            该账号只展示截图，不提供外部链接。
           </p>
         )}
       </div>
