@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { faq, faqIntro } from "../../content/faq";
+import { faq, faqIntro, faqTitle } from "../../content/faq";
 import { usePresentation } from "../../presentation/PresentationContext";
 
-/** 预设追问抽屉：打开 / 关闭后回到原来的讲解位置 */
+/** 常见追问抽屉：一题一个直接回答；打开 / 关闭后回到原来的讲解位置 */
 export default function FaqDrawer() {
   const { faqOpen, closeFaq } = usePresentation();
-  const [openId, setOpenId] = useState<string | null>(faq[0]?.id ?? null);
+  const [openId, setOpenId] = useState<string | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,12 +29,12 @@ export default function FaqDrawer() {
         className="faq"
         role="dialog"
         aria-modal="true"
-        aria-label="对方可能会问"
+        aria-label={faqTitle}
         tabIndex={-1}
         ref={panelRef}
       >
         <div className="faq__head">
-          <span className="faq__title">对方可能会问</span>
+          <span className="faq__title">{faqTitle}</span>
           <button type="button" className="btn btn--ghost btn--sm" onClick={closeFaq}>
             关闭
           </button>
@@ -59,10 +59,7 @@ export default function FaqDrawer() {
                 </button>
                 {expanded && (
                   <div className="faq__a">
-                    <span className="faq__seg">15 秒直接回答</span>
-                    <p className="faq__para">{item.short}</p>
-                    <span className="faq__seg">45 秒完整回答</span>
-                    <p className="faq__para">{item.full}</p>
+                    <p className="faq__para">{item.answer}</p>
                   </div>
                 )}
               </div>

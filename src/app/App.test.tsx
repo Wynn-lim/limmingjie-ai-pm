@@ -114,22 +114,22 @@ describe("预设追问抽屉", () => {
   it("可以打开与关闭，并回到原来的讲解位置", async () => {
     const user = userEvent.setup();
     renderApp();
-    await user.click(screen.getByRole("button", { name: "对方可能会问" }));
-    const dialog = await screen.findByRole("dialog", { name: "对方可能会问" });
+    await user.click(screen.getByRole("button", { name: "常见追问" }));
+    const dialog = await screen.findByRole("dialog", { name: "常见追问与回答" });
     expect(dialog).toBeInTheDocument();
     expect(within(dialog).getByText(/为什么用 Agent，而不是普通 Prompt？/)).toBeInTheDocument();
 
-    await user.click(within(dialog).getAllByText(/15 秒直接回答/)[0]);
-    expect(screen.getAllByText(/看流程有没有多步骤判断和跨环节依赖/).length).toBeGreaterThan(0);
+    await user.click(within(dialog).getByRole("button", { name: /为什么用 Agent/ }));
+    expect(screen.getAllByText(/我的判断标准是三条/).length).toBeGreaterThan(0);
   });
 
   it("关闭按钮可以收起抽屉", async () => {
     const user = userEvent.setup();
     renderApp();
-    await user.click(screen.getByRole("button", { name: "对方可能会问" }));
-    const dialog = await screen.findByRole("dialog", { name: "对方可能会问" });
+    await user.click(screen.getByRole("button", { name: "常见追问" }));
+    const dialog = await screen.findByRole("dialog", { name: "常见追问与回答" });
     await user.click(within(dialog).getByRole("button", { name: "关闭" }));
-    expect(screen.queryByRole("dialog", { name: "对方可能会问" })).toBeNull();
+    expect(screen.queryByRole("dialog", { name: "常见追问与回答" })).toBeNull();
   });
 });
 

@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { chapters } from "../../content/portfolio";
 import { screens, screenMinutes } from "../../content/scripts";
+import { faqEntryLabel } from "../../content/faq";
 import { usePresentation } from "../../presentation/PresentationContext";
 
 const modeLabel = {
@@ -121,7 +122,7 @@ export default function PresentationBar() {
           )}
 
           <button type="button" className="btn btn--ghost btn--sm" onClick={openFaq}>
-            对方可能会问
+            {faqEntryLabel}
           </button>
         </div>
       </div>

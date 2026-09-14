@@ -96,10 +96,8 @@ export interface CompanyProject {
 export interface FaqEntry {
   id: string;
   question: string;
-  /** 15 秒直接回答 */
-  short: string;
-  /** 45 秒完整回答 */
-  full: string;
+  /** 一个直接回答，不分长短两版 */
+  answer: string;
 }
 
 export interface PlanPhase {

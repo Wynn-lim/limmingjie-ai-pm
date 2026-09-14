@@ -73,14 +73,11 @@ test.describe("面试作品集验收", () => {
   });
 
   test("FAQ 抽屉可开可关", async ({ page }) => {
-    await page.getByRole("button", { name: "对方可能会问" }).click();
-    const dialog = page.getByRole("dialog", { name: "对方可能会问" });
+    await page.getByRole("button", { name: "常见追问" }).click();
+    const dialog = page.getByRole("dialog", { name: "常见追问与回答" });
     await expect(dialog).toBeVisible();
-    // 首题默认展开
-    await expect(dialog.getByText("15 秒直接回答").first()).toBeVisible();
-    // 展开另一题
     await dialog.getByRole("button", { name: /3C 内容工作流具体怎么实现/ }).click();
-    await expect(dialog.getByText(/分十步：资料输入/)).toBeVisible();
+    await expect(dialog.getByText(/关键是把参数变成用户价值/)).toBeVisible();
     await dialog.getByRole("button", { name: "关闭" }).click();
     await expect(dialog).toHaveCount(0);
   });

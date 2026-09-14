@@ -211,11 +211,12 @@ describe("3C 工作流与入职项目", () => {
 });
 
 describe("预设追问", () => {
-  it("覆盖需求要求的 13 个问题，且每题有 15 秒与 45 秒两版", () => {
+  it("覆盖需求要求的 13 个问题，且每题只有一个直接回答", () => {
     expect(faq.length).toBeGreaterThanOrEqual(13);
     for (const f of faq) {
-      expect(f.short.replace(/\s/g, "").length).toBeGreaterThan(40);
-      expect(f.full.replace(/\s/g, "").length).toBeGreaterThan(f.short.length);
+      expect(f.answer.replace(/\s/g, "").length).toBeGreaterThan(80);
+      expect("short" in f).toBe(false);
+      expect("full" in f).toBe(false);
     }
   });
 
