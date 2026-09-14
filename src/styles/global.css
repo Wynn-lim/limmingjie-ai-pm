@@ -612,20 +612,54 @@ a:hover {
 }
 
 /* ============================================================
-   首屏
+   首屏：深海军蓝封面
    ============================================================ */
 .hero {
   position: relative;
-  padding-block: 64px 0;
   border-bottom: 1px solid var(--line);
-  background: linear-gradient(180deg, #fbfaf7 0%, var(--paper) 62%);
+  background: var(--navy);
+  color: #e9eff6;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+      rgba(255, 255, 255, 0.055) 1px,
+      transparent 1px
+    ),
+    radial-gradient(900px 420px at 88% -20%, rgba(184, 240, 46, 0.16), transparent 62%);
+  background-size: 24px 24px, auto;
+  pointer-events: none;
+}
+
+.hero__inner {
+  position: relative;
+  padding-top: 68px;
 }
 
 .hero__grid {
   display: grid;
   grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr);
-  gap: 56px;
+  gap: 62px;
   align-items: start;
+}
+
+.hero .eyebrow {
+  color: #9fd13c;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero .eyebrow::before {
+  content: "";
+  width: 30px;
+  height: 1px;
+  background: currentColor;
+  flex: 0 0 auto;
 }
 
 .hero__headline {
@@ -633,58 +667,86 @@ a:hover {
   line-height: 1.16;
   letter-spacing: -0.028em;
   font-weight: 800;
-  color: var(--navy);
+  color: #fff;
   max-width: 19ch;
-  margin-top: 16px;
+  margin-top: 18px;
   text-wrap: balance;
 }
 
 .hero__headline em {
   font-style: normal;
   white-space: nowrap;
-  background-image: linear-gradient(
-    180deg,
-    transparent 64%,
-    var(--accent) 64%,
-    var(--accent) 94%,
-    transparent 94%
-  );
-  padding-inline: 2px;
+  color: var(--accent);
 }
 
 .hero__identity {
-  margin-top: 22px;
+  margin-top: 24px;
   font-size: 17px;
   font-weight: 700;
-  color: var(--ink);
+  color: #fff;
   letter-spacing: -0.005em;
 }
 
 .hero__sub {
   margin-top: 4px;
   font-size: 15.5px;
-  color: var(--ink-2);
+  color: #a7bcd2;
 }
 
 .hero__value {
-  margin-top: 24px;
+  margin-top: 26px;
   font-size: 16px;
-  line-height: 1.8;
-  color: var(--ink-2);
+  line-height: 1.85;
+  color: #d3dfeb;
   max-width: 62ch;
-  border-left: 2px solid var(--accent-strong);
+  border-left: 2px solid var(--accent);
   padding-left: 18px;
 }
 
 .hero__actions {
-  margin-top: 30px;
+  margin-top: 32px;
 }
 
 .hero__hint {
-  margin-top: 12px;
+  margin-top: 14px;
   font-size: var(--fs-small);
-  color: var(--ink-3);
+  color: #8299b1;
   font-variant-numeric: tabular-nums;
+}
+
+.hero .btn--primary {
+  background: var(--accent);
+  color: var(--navy);
+  box-shadow: 0 10px 26px -14px rgba(184, 240, 46, 0.75);
+}
+
+.hero .btn--primary:hover {
+  background: #c9f75a;
+  color: var(--navy);
+}
+
+.hero .btn--accent {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+}
+
+.hero .btn--accent:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #fff;
+  color: #fff;
+}
+
+.hero .btn--ghost {
+  border-color: rgba(255, 255, 255, 0.34);
+  color: #fff;
+}
+
+.hero .btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+  color: #fff;
 }
 
 /* 首屏右侧：能力闭环 */
@@ -693,11 +755,12 @@ a:hover {
 }
 
 .chain {
-  background: var(--navy);
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--r-m);
-  padding: 24px 26px 22px;
-  color: #dfe8f1;
-  box-shadow: var(--sh-3);
+  padding: 26px 28px 24px;
+  color: #dbe6f1;
+  backdrop-filter: blur(2px);
 }
 
 .chain__head {
@@ -754,9 +817,10 @@ a:hover {
 
 /* 首屏证据带 */
 .proof-band {
-  margin-top: 46px;
-  border-top: 1px solid var(--line);
-  background: var(--paper-2);
+  position: relative;
+  margin-top: 54px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.16);
 }
 
 .proof-grid {
@@ -766,7 +830,7 @@ a:hover {
 }
 
 .proof-grid > * {
-  border-right: 1px solid var(--line);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .proof-grid > *:last-child {
@@ -775,11 +839,29 @@ a:hover {
 
 .proof-grid .metric {
   border: 0;
+  border-left: 0;
   border-radius: 0;
   box-shadow: none;
   background: transparent;
   height: 100%;
-  padding: 24px 22px 26px;
+  padding: 26px 24px 28px;
+}
+
+.hero .metric__value {
+  color: #fff;
+}
+
+.hero .metric__label {
+  color: #dbe6f1;
+}
+
+.hero .metric__scope {
+  color: #8299b1;
+  border-top-color: rgba(255, 255, 255, 0.14);
+}
+
+.hero .metric__scope::first-line {
+  color: #8299b1;
 }
 
 /* ============================================================
@@ -811,13 +893,20 @@ a:hover {
 }
 
 .sec-head__no {
-  font-size: 46px;
-  line-height: 0.86;
+  font-size: 50px;
+  line-height: 0.84;
   font-weight: 800;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.04em;
   color: var(--line-strong);
   font-variant-numeric: tabular-nums;
   user-select: none;
+}
+
+@supports (-webkit-text-stroke: 1px #000) {
+  .sec-head__no {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--line-strong);
+  }
 }
 
 .sec-head__main > * + * {
@@ -2069,4 +2158,30 @@ a:hover {
   .faq-scrim {
     display: none !important;
   }
+}
+
+
+/* ============================================================
+   最高权重模块：整段用极浅海军蓝底突出
+   ============================================================ */
+.section--emphasis {
+  background: linear-gradient(180deg, #edf2f8 0%, #f4f6f9 100%);
+}
+
+.section--emphasis .frame__body,
+.section--emphasis .flow-rail {
+  background: var(--surface);
+}
+
+/* 指标卡：数字更大、右上角加序号刻度 */
+.metric {
+  position: relative;
+}
+
+.metric__value {
+  font-size: 31px;
+}
+
+.metric__value--sm {
+  font-size: 22px;
 }

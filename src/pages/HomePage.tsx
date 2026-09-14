@@ -54,6 +54,7 @@ export default function HomePage() {
     <>
       {/* ---------------- 首屏 ---------------- */}
       <Section id="s-hero" bare className="hero">
+        <div className="hero__inner">
         <div className="shell">
           <div className="hero__grid">
             <div>
@@ -116,6 +117,7 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+        </div>
         </div>
       </Section>
 
@@ -183,42 +185,40 @@ export default function HomePage() {
         title="企业AI内容生产体系"
         conclusion={chapterOf("ch-content")?.conclusion}
       >
-        <div className="grid-12">
-          <div className="col-7">
-            <div className="frame">
-              <div className="frame__bar">
-                <span className="frame__dots" aria-hidden="true">
-                  <span className="frame__dot" />
-                  <span className="frame__dot" />
-                  <span className="frame__dot" />
-                </span>
-                <span className="frame__label">内容账号后台 · 2026-09-14 截图</span>
-              </div>
-              <div className="frame__body">
-                <img
-                  src={asset("assets/accounts/audit-dashboard-20260914.png")}
-                  alt="内容账号后台截图（截图时数据）"
-                  width={sizeOf("assets/accounts/audit-dashboard-20260914.png")?.w}
-                  height={sizeOf("assets/accounts/audit-dashboard-20260914.png")?.h}
-                  loading="lazy"
-                />
-              </div>
-            </div>
+        <div className="frame">
+          <div className="frame__bar">
+            <span className="frame__dots" aria-hidden="true">
+              <span className="frame__dot" />
+              <span className="frame__dot" />
+              <span className="frame__dot" />
+            </span>
+            <span className="frame__label">
+              视频号助手 · 账号数据与昨日数据 · 2026-09-14 截图
+            </span>
           </div>
+          <div className="frame__body">
+            <img
+              src={asset("assets/accounts/audit-metrics-20260914.jpg")}
+              alt="视频号助手后台：账号数据与昨日数据截图"
+              width={sizeOf("assets/accounts/audit-metrics-20260914.jpg")?.w}
+              height={sizeOf("assets/accounts/audit-metrics-20260914.jpg")?.h}
+              loading="lazy"
+            />
+          </div>
+        </div>
 
-          <div className="col-5 stack-24">
-            <div>
-              <h3 className="block-title">项目背景</h3>
-              <p style={{ color: "var(--ink-2)", fontSize: 15.5 }}>{contentSystem.background}</p>
-            </div>
-            <div>
-              <h3 className="block-title">我具体负责什么</h3>
-              <ul style={{ color: "var(--ink-2)", fontSize: 15.5 }}>
-                {contentSystem.responsibility.map((r) => (
-                  <li key={r}>{r}</li>
-                ))}
-              </ul>
-            </div>
+        <div className="grid-12" style={{ marginTop: 26 }}>
+          <div className="col-6">
+            <h3 className="block-title">项目背景</h3>
+            <p style={{ color: "var(--ink-2)", fontSize: 15.5 }}>{contentSystem.background}</p>
+          </div>
+          <div className="col-6">
+            <h3 className="block-title">我具体负责什么</h3>
+            <ul style={{ color: "var(--ink-2)", fontSize: 15.5 }}>
+              {contentSystem.responsibility.map((r) => (
+                <li key={r}>{r}</li>
+              ))}
+            </ul>
           </div>
         </div>
 
@@ -389,6 +389,7 @@ export default function HomePage() {
       <Section
         id="s-c3"
         no="03"
+        className="section--emphasis"
         eyebrow="核心方案 · 最高权重"
         title="从一条音响视频，到一套可规模化的3C内容生产系统"
         conclusion="把产品资料变成可复用、可质检、能反馈的内容生产线。"

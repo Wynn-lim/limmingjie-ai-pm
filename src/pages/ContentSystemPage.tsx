@@ -8,6 +8,7 @@ import {
   douyinWorks,
 } from "../content/portfolio";
 import MetricCard from "../components/ui/MetricCard";
+import { sizeOf } from "../content/imageSizes";
 import AccountCard from "../components/ui/AccountCard";
 import FlowRail from "../components/ui/FlowRail";
 import DouyinWorkCard from "../components/media/DouyinWorkCard";
@@ -144,6 +145,47 @@ export default function ContentSystemPage() {
                     />
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 视频号后台：两张重点切图，避免整窗截图看不清数字 */}
+          <div className="grid-12" style={{ marginTop: 20 }}>
+            {[
+              {
+                path: "assets/accounts/audit-metrics-20260914.jpg",
+                label: "视频号助手 · 账号数据与昨日数据（2026-09-14）",
+                note: "关注者 4,455、累计视频 190、昨日新增播放 22.6万。",
+              },
+              {
+                path: "assets/accounts/audit-works-20260914.jpg",
+                label: "视频号助手 · 最近视频播放明细（2026-09-14）",
+                note: "单条最高 26.2万（2026-08-24 发布），另有 25.6万、5.2万、9968 等。",
+              },
+            ].map((item) => (
+              <div className="col-6" key={item.path}>
+                <div className="frame">
+                  <div className="frame__bar">
+                    <span className="frame__dots" aria-hidden="true">
+                      <span className="frame__dot" />
+                      <span className="frame__dot" />
+                      <span className="frame__dot" />
+                    </span>
+                    <span className="frame__label">{item.label}</span>
+                  </div>
+                  <div className="frame__body">
+                    <img
+                      src={asset(item.path)}
+                      alt={item.label}
+                      width={sizeOf(item.path)?.w}
+                      height={sizeOf(item.path)?.h}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+                <p className="note" style={{ marginTop: 10, fontSize: 13.5 }}>
+                  {item.note}
+                </p>
               </div>
             ))}
           </div>

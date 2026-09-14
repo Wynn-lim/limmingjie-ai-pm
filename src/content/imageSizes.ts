@@ -9,6 +9,14 @@ export const imageSizes: Record<string, ImageSize> = {
     "w": 1912,
     "h": 956
   },
+  "assets/accounts/audit-metrics-20260914.jpg": {
+    "w": 1416,
+    "h": 372
+  },
+  "assets/accounts/audit-works-20260914.jpg": {
+    "w": 1416,
+    "h": 568
+  },
   "assets/accounts/audit.jpg": {
     "w": 1912,
     "h": 956

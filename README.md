@@ -56,6 +56,18 @@ npx playwright test  # 1440x900 / 1366x768 / 390x844 验收
 
 Hermes 与 Codex 属于协作工具。需求判断、流程设计、提示词、验收标准与迭代方向由候选人负责，编码实现由工具协作完成，不描述成完全由个人手写开发。
 
+## 离线版（面试现场不依赖网络）
+
+```bash
+npm run build:offline
+```
+
+产物在 `dist-offline/`：CSS、JS 与字体全部内联进 `index.html`，图片 / 视频 / 简历保持相对路径。
+直接把整个 `dist-offline` 文件夹复制到任意电脑，双击 `index.html` 即可打开（file:// 也能用）。
+正式 GitHub Pages 构建（`npm run build`）不受影响，两者的 base 路径互相独立。
+
+> 图片尺寸表 `src/content/imageSizes.ts` 由 `npm run sizes` 生成（需要 ffprobe，可用 `FFPROBE` 环境变量指定路径），已提交到仓库，CI 构建不需要它。
+
 ## 部署
 
 推送到 `main` 后由 `.github/workflows/deploy-pages.yml` 自动构建并发布。

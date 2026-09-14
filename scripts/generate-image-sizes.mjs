@@ -4,8 +4,8 @@ import { extname, join, relative, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
 
 const root = resolve(process.cwd(), "public");
-const ffprobe =
-  "C:/Users/Administrator/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1.2-full_build/bin/ffprobe";
+// 允许通过环境变量指定 ffprobe；默认走 PATH，保证 CI 上也能跑
+const ffprobe = process.env.FFPROBE || "ffprobe";
 
 const exts = new Set([".png", ".jpg", ".jpeg", ".webp"]);
 const found = [];
