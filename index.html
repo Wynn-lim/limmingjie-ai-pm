@@ -3,633 +3,458 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#08090b" />
-<meta name="description" content="李明杰 · AI 产品经理。把业务问题做成真正能用的 AI 工作流：企业 AI 内容生产体系、3C 内容生产流水线、AI 编导 Agent、竞品情报工作台。" />
-<title>李明杰 · AI 产品经理｜作品集</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="preload" href="/limmingjie-ai-pm/assets/fonts/manrope-latin-variable.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/limmingjie-ai-pm/app.css" />
+<title>李明杰 · 剪辑工程</title>
+<style>
+@font-face{font-family:"M";src:local("SF Mono"),local("Consolas"),local("Menlo");}
+:root{
+  --bg:#0a0a0a; --bg2:#111111; --panel:#151515; --panel2:#1a1a1a;
+  --line:#242424; --line2:#2e2e2e; --line3:#3a3a3a;
+  --ink:#f0efea; --ink2:#a3a099; --ink3:#6b6862; --ink4:#484540;
+  --amber:#ffb800; --amber2:#e09400; --amber-wash:rgba(255,184,0,.09);
+  --red:#ff4d3d;
+  --mono:"M",ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.7;overflow-x:hidden}
+::selection{background:var(--amber);color:#000}
+a{color:inherit;text-decoration:none}
+
+/* ════════ 时间轴（左侧固定，滚动驱动） ════════ */
+.timeline{position:fixed;left:0;top:0;bottom:0;width:76px;z-index:90;border-right:1px solid var(--line);background:var(--bg);display:flex;flex-direction:column}
+.tl__hd{padding:14px 0 10px;text-align:center;border-bottom:1px solid var(--line)}
+.tl__lbl{font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;color:var(--ink4);text-transform:uppercase}
+.tl__tc{font-family:var(--mono);font-size:11px;color:var(--amber);margin-top:5px;font-variant-numeric:tabular-nums}
+.tl__track{flex:1;position:relative;padding:14px 0}
+.tl__rail{position:absolute;left:50%;top:14px;bottom:14px;width:1px;background:var(--line2)}
+.tl__fill{position:absolute;left:50%;top:14px;width:1px;background:var(--amber);transform:translateX(-50%)}
+.tl__head{position:absolute;left:50%;width:19px;height:11px;transform:translateX(-50%);z-index:2}
+.tl__head::before{content:"";position:absolute;inset:0;background:var(--amber);clip-path:polygon(0 0,100% 0,100% 62%,50% 100%,0 62%)}
+.tl__clip{position:absolute;left:50%;transform:translateX(-50%);width:34px;border:1px solid var(--line2);border-radius:2px;background:var(--panel);cursor:pointer;transition:border-color .15s,background .15s;display:flex;align-items:center;justify-content:center}
+.tl__clip span{font-family:var(--mono);font-size:7.5px;color:var(--ink4);letter-spacing:.04em}
+.tl__clip:hover{border-color:var(--line3)}
+.tl__clip.is-active{border-color:var(--amber);background:var(--amber-wash)}
+.tl__clip.is-active span{color:var(--amber)}
+.tl__ft{padding:9px 0;text-align:center;border-top:1px solid var(--line)}
+.tl__ft i{display:block;width:5px;height:5px;border-radius:50%;background:var(--red);margin:0 auto;animation:rec 1.6s infinite}
+@keyframes rec{0%,100%{opacity:1}50%{opacity:.15}}
+
+/* ════════ 主区 ════════ */
+.main{margin-left:76px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 40px}
+
+/* ════════ HUD ════════ */
+.hud{position:sticky;top:0;z-index:80;background:rgba(10,10,10,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:0 40px}
+.hud__in{max-width:1080px;margin:0 auto;height:46px;display:flex;align-items:center;gap:18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink3)}
+.hud__brand{color:var(--ink);font-weight:700;font-size:11.5px;letter-spacing:0}
+.hud__brand b{color:var(--amber)}
+.hud__clip{color:var(--amber)}
+.hud__sp{flex:1}
+.hud__meta{display:flex;gap:14px}
+.hud__meta span{color:var(--ink4)}
+@media(max-width:720px){.hud__meta{display:none}}
+
+/* ════════ 监视器首屏 ════════ */
+.monitor{min-height:100svh;display:flex;align-items:center;justify-content:center;position:relative;padding:60px 40px;overflow:hidden}
+/* 三分线 */
+.monitor__thirds{position:absolute;inset:0;pointer-events:none;opacity:.5}
+.monitor__thirds::before,.monitor__thirds::after{content:"";position:absolute;background:var(--line)}
+.monitor__thirds::before{left:33.33%;right:33.33%;top:0;bottom:0;border-left:1px solid var(--line);border-right:1px solid var(--line);background:none}
+.monitor__thirds::after{top:33.33%;bottom:33.33%;left:0;right:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:none}
+/* 安全框 */
+.monitor__safe{position:absolute;left:7%;right:7%;top:9%;bottom:9%;border:1px dashed var(--line2);pointer-events:none}
+.monitor__safe::after{content:"TITLE SAFE";position:absolute;left:0;top:-15px;font-family:var(--mono);font-size:7.5px;letter-spacing:.16em;color:var(--ink4)}
+/* 取景框角标 */
+.monitor__corner{position:absolute;width:16px;height:16px;border:1px solid var(--amber)}
+.monitor__corner--tl{left:20px;top:20px;border-right:none;border-bottom:none}
+.monitor__corner--tr{right:20px;top:20px;border-left:none;border-bottom:none}
+.monitor__corner--bl{left:20px;bottom:20px;border-right:none;border-top:none}
+.monitor__corner--br{right:20px;bottom:20px;border-left:none;border-top:none}
+
+.monitor__in{position:relative;z-index:2;max-width:820px;width:100%}
+.monitor__slate{display:flex;flex-wrap:wrap;gap:8px 20px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink4);margin-bottom:30px;text-transform:uppercase}
+.monitor__slate b{color:var(--amber);font-weight:600}
+.monitor__title{font-size:clamp(40px,7vw,84px);line-height:1.02;letter-spacing:-.045em;font-weight:700}
+.monitor__title em{font-style:normal;color:var(--amber)}
+.monitor__title .ln{display:block;overflow:hidden}
+.monitor__title .ln>i{display:inline-block;font-style:normal;animation:up 1s cubic-bezier(.16,1,.3,1) both}
+.monitor__title .ln:nth-child(1)>i{animation-delay:.15s}
+.monitor__title .ln:nth-child(2)>i{animation-delay:.27s}
+.monitor__title .ln:nth-child(3)>i{animation-delay:.39s}
+@keyframes up{from{transform:translateY(108%)}to{transform:none}}
+.monitor__sub{margin-top:32px;font-size:clamp(14px,1.6vw,17px);color:var(--ink2);line-height:1.85;max-width:37em;animation:fade 1s .6s both}
+.monitor__sub b{color:var(--ink);font-weight:600}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.monitor__cue{margin-top:36px;display:flex;flex-wrap:wrap;gap:10px;animation:fade 1s .78s both}
+.cue{font-family:var(--mono);font-size:11px;padding:8px 14px;border:1px solid var(--line2);border-radius:3px;color:var(--ink2);background:var(--panel);display:inline-flex;align-items:center;gap:8px}
+.cue--play{background:var(--amber);color:#000;border-color:var(--amber);font-weight:700;cursor:pointer;transition:opacity .15s}
+.cue--play:hover{opacity:.88}
+.cue--ghost{cursor:pointer;transition:border-color .15s,color .15s}
+.cue--ghost:hover{border-color:var(--ink3);color:var(--ink)}
+.cue i{width:0;height:0;border-left:6px solid currentColor;border-top:4px solid transparent;border-bottom:4px solid transparent}
+
+/* 底部进度提示 */
+.monitor__hint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:var(--ink4);display:flex;flex-direction:column;align-items:center;gap:6px}
+.monitor__hint i{width:1px;height:26px;background:linear-gradient(var(--ink4),transparent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+
+/* ════════ 章节（clip 面板） ════════ */
+.clip{padding:76px 0;border-bottom:1px solid var(--line);position:relative}
+.clip__bar{display:flex;align-items:center;gap:12px;margin-bottom:34px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink4);text-transform:uppercase}
+.clip__bar .no{color:var(--amber);font-weight:700}
+.clip__bar .tc{color:var(--ink3)}
+.clip__bar .ln{flex:1;height:1px;background:var(--line)}
+.clip__bar .dur{color:var(--ink4)}
+.clip__t{font-size:clamp(24px,3.4vw,40px);line-height:1.14;letter-spacing:-.032em;font-weight:700;margin-bottom:16px;max-width:20em}
+.clip__t em{font-style:normal;color:var(--amber)}
+.clip__c{font-size:16px;color:var(--ink2);line-height:1.82;max-width:44em;padding-left:16px;border-left:2px solid var(--amber)}
+.clip__c b{color:var(--ink);font-weight:600}
+
+/* 素材箱 */
+.bin{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-top:34px}
+@media(max-width:860px){.bin{grid-template-columns:1fr}}
+.bin__i{background:var(--panel);padding:20px;transition:background .18s;cursor:default;position:relative}
+.bin__i:hover{background:var(--panel2)}
+.bin__i::after{content:"CLIP";position:absolute;right:14px;top:14px;font-family:var(--mono);font-size:8px;letter-spacing:.14em;color:var(--ink4)}
+.bin__k{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--amber);text-transform:uppercase}
+.bin__t{font-size:15px;font-weight:700;margin-top:11px;letter-spacing:-.012em;line-height:1.4}
+.bin__d{font-size:12.5px;color:var(--ink3);margin-top:10px;line-height:1.7}
+.bin__meta{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line2);display:grid;gap:5px}
+.bin__meta div{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px}
+.bin__meta .k{color:var(--ink4)}
+.bin__meta .v{color:var(--ink2)}
+
+/* 作品轨（抖音真实作品） */
+.track{margin-top:34px;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel)}
+.track__hd{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid var(--line);background:var(--panel2);font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase}
+.track__hd .v1{color:var(--amber)}
+.track__r{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:18px;border-bottom:1px solid var(--line);transition:background .18s}
+.track__r:last-child{border-bottom:none}
+.track__r:hover{background:var(--panel2)}
+.track__no{font-family:var(--mono);font-size:10px;color:var(--ink4);width:26px}
+.track__b{min-width:0}
+.track__acc{font-family:var(--mono);font-size:10px;color:var(--amber);letter-spacing:.06em}
+.track__t{font-size:15px;font-weight:700;margin-top:6px;letter-spacing:-.012em;line-height:1.4}
+.track__d{font-size:12.5px;color:var(--ink3);margin-top:7px;line-height:1.65}
+.track__go{font-family:var(--mono);font-size:10.5px;color:var(--ink2);border:1px solid var(--line2);border-radius:3px;padding:8px 13px;white-space:nowrap;transition:border-color .15s,color .15s;cursor:pointer}
+.track__go:hover{border-color:var(--amber);color:var(--amber)}
+@media(max-width:640px){.track__r{grid-template-columns:1fr;gap:10px}.track__no{display:none}}
+
+/* 数据格 */
+.dials{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-top:34px}
+@media(max-width:860px){.dials{grid-template-columns:repeat(2,1fr)}}
+.dial{background:var(--panel);padding:22px 20px}
+.dial__v{font-family:var(--mono);font-size:clamp(22px,2.8vw,32px);font-weight:700;letter-spacing:-.04em;line-height:1.05}
+.dial__l{font-size:12.5px;color:var(--ink2);margin-top:9px;font-weight:600}
+.dial__s{font-size:11px;color:var(--ink4);margin-top:9px;line-height:1.6}
+
+/* 收场 */
+.final{padding:110px 0 90px;position:relative;overflow:hidden}
+.final::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 20% 40%,var(--amber-wash),transparent 65%)}
+.final__in{position:relative;max-width:44em}
+.final__k{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.final__k span{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--amber);border:1px solid var(--amber);border-radius:100px;padding:5px 13px}
+.final__t{font-size:clamp(26px,3.8vw,46px);line-height:1.16;letter-spacing:-.036em;font-weight:700}
+.final__t em{font-style:normal;color:var(--amber)}
+.final__p{font-size:16px;color:var(--ink2);margin-top:26px;line-height:1.85}
+.final__cue{margin-top:38px;display:flex;flex-wrap:wrap;gap:10px}
+
+.foot{border-top:1px solid var(--line);padding:26px 40px;display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--ink4)}
+.foot a{color:var(--ink3);transition:color .15s}
+.foot a:hover{color:var(--amber)}
+
+/* 进场 */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}.monitor__title .ln>i,.monitor__sub,.monitor__cue{animation:none}.tl__ft i{animation:none}}
+</style>
 </head>
 <body>
 
-<!-- ══════════════ 顶部 HUD ══════════════ -->
-<header class="hud" id="hud">
-  <div class="hud__l">
-    <span class="hud__mark">LMJ</span>
-    <span class="hud__name">李明杰</span>
-    <span class="hud__sep">/</span>
-    <span class="hud__role">AI 产品经理</span>
+<!-- ════════ 时间轴 ════════ -->
+<aside class="timeline">
+  <div class="tl__hd">
+    <div class="tl__lbl">Timeline</div>
+    <div class="tl__tc" id="tlTc">00:00:00</div>
   </div>
-  <nav class="hud__nav">
-    <a href="#reel" data-hud>作品</a>
-    <a href="#workflow" data-hud>方法</a>
-    <a href="#director" data-hud>编导工作台</a>
-    <a href="#intel" data-hud>竞品情报</a>
-    <a href="#plan" data-hud>计划</a>
-  </nav>
-  <a class="hud__cta" href="/limmingjie-ai-pm/resume/lim-mingjie-ai-pm-resume.pdf" target="_blank" rel="noopener">
-    下载简历 <span class="mono">↓</span>
-  </a>
-</header>
-
-<!-- ══════════════ ACT 0 · 定格式开场 ══════════════ -->
-<section class="reel" id="reel">
-  <!-- 背景：分屏多机位，第一眼就是「画面」而不是「网页」 -->
-  <div class="reel__stage">
-    <div class="reel__cell" data-cell="1"><img src="/limmingjie-ai-pm/assets/accounts/chace.jpg" alt="" loading="eager" /></div>
-    <div class="reel__cell" data-cell="2"><img src="/limmingjie-ai-pm/assets/accounts/narwhal.png" alt="" loading="eager" /></div>
-    <div class="reel__cell" data-cell="3"><img src="/limmingjie-ai-pm/assets/cases/ai-director/03-script.jpg" alt="" loading="eager" /></div>
-    <div class="reel__cell" data-cell="4"><img src="/limmingjie-ai-pm/assets/accounts/audit-dashboard-20260914.png" alt="" loading="eager" /></div>
-    <div class="reel__scrim"></div>
-    <div class="reel__grain"></div>
+  <div class="tl__track" id="tlTrack">
+    <div class="tl__rail"></div>
+    <div class="tl__fill" id="tlFill"></div>
+    <div class="tl__head" id="tlHead"></div>
   </div>
+  <div class="tl__ft"><i></i></div>
+</aside>
 
-  <div class="reel__in">
-    <div class="reel__top">
-      <span class="reel__rec"><i></i>REC</span>
-      <span class="mono" id="tc">00:00:00:00</span>
-      <span class="reel__fmt">16:9 · 4K · AI WORKFLOW</span>
+<div class="main">
+
+  <!-- ════════ HUD ════════ -->
+  <div class="hud"><div class="hud__in">
+    <span class="hud__brand">李明杰 <b>/</b> AI PM</span>
+    <span class="hud__clip" id="hudClip">C01 · 首屏</span>
+    <span class="hud__sp"></span>
+    <div class="hud__meta">
+      <span id="hudTc">00:00:00</span>
+      <span>16:9</span>
+      <span>2026</span>
     </div>
+  </div></div>
 
-    <h1 class="reel__title">
-      <span class="reel__line"><em>把业务问题，</em></span>
-      <span class="reel__line">做成<em>真正能用</em>的</span>
-      <span class="reel__line">AI 工作流。</span>
-    </h1>
+  <!-- ════════ C01 · 监视器 ════════ -->
+  <section class="monitor" data-clip="C01" data-name="首屏" data-dur="00:00:18">
+    <div class="monitor__thirds"></div>
+    <div class="monitor__safe"></div>
+    <div class="monitor__corner monitor__corner--tl"></div>
+    <div class="monitor__corner monitor__corner--tr"></div>
+    <div class="monitor__corner monitor__corner--bl"></div>
+    <div class="monitor__corner monitor__corner--br"></div>
 
-    <p class="reel__sub">
-      我不是 AI 工具的使用者。<br />
-      我看业务哪里重复、哪里低效，再决定用 <b>Prompt / Skill / Agent / RAG / API / RPA</b> 中的哪一种，<br />
-      然后亲手把它做成可以验证、可以复用、能持续变准的系统。
-    </p>
-
-    <div class="reel__lower3">
-      <span class="reel__bar"></span>
-      <span class="reel__lower3t">15 分钟讲完 · 三个可点开的真实系统 · 所有数字标注口径</span>
-    </div>
-
-    <div class="reel__cta">
-      <a class="btn btn--primary" href="#director">看作品 <span class="btn__arrow">→</span></a>
-      <a class="btn btn--ghost" href="/limmingjie-ai-pm/resume/lim-mingjie-ai-pm-resume.pdf" target="_blank" rel="noopener">下载简历</a>
-    </div>
-  </div>
-
-  <div class="reel__scroll"><span>SCROLL</span><i></i></div>
-</section>
-
-<!-- ══════════════ ACT 1 · 证据条（数字先砸下来） ══════════════ -->
-<section class="proof rise" aria-label="关键结果">
-  <div class="proof__c">
-    <div class="proof__v" data-count="300" data-suffix="+">300+</div>
-    <div class="proof__l">内容产出</div>
-    <div class="proof__s">任职期间累计发布的视频与图文数量（含企业与招商账号）</div>
-  </div>
-  <div class="proof__c">
-    <div class="proof__v">3天<span class="proof__arr">→</span>0.5天</div>
-    <div class="proof__l">单条内容制作周期</div>
-    <div class="proof__s">统计范围为「选题确认到成片交付」的可制作环节，不含审批等待</div>
-  </div>
-  <div class="proof__c">
-    <div class="proof__v" data-count="137">137</div>
-    <div class="proof__l">竞品情报档案</div>
-    <div class="proof__s">独角鲸竞品情报工作台：竞品 / 事件 / 政策 / 话术全量建档，可点开看</div>
-  </div>
-  <div class="proof__c">
-    <div class="proof__v" data-count="73">73</div>
-    <div class="proof__l">AI 编导实跑案例</div>
-    <div class="proof__s">3-Agent 管线真实运行结果，95 条过程记录 + 81 份三层评测报告</div>
-  </div>
-</section>
-
-<!-- ══════════════ ACT 2 · 岗位匹配 ══════════════ -->
-<section class="sec" id="match">
-  <div class="sec__head rise">
-    <span class="sec__idx">01 / MATCH</span>
-    <h2 class="sec__title">现有经验，怎么迁到耳机音响 3C 业务</h2>
-    <p class="sec__concl">我不是单纯的 AI 工具使用者，而是能把业务问题转化成 AI 工作流、并且<b>自己动手做出验证</b>的候选人。</p>
-  </div>
-  <div class="match rise">
-    <div class="match__r"><div class="match__need">深入部门理解业务流程</div><div class="match__exp">长期对接内容、市场与销售需求，梳理内容与咨询流程；入职后通过部门访谈建立 AI 需求池</div></div>
-    <div class="match__r"><div class="match__need">电商数据采集与分析</div><div class="match__exp">建立内容数据表、检查表与复盘机制；可迁移到店铺、广告与 ERP 数据周报</div></div>
-    <div class="match__r"><div class="match__need">RPA / API 系统集成</div><div class="match__exp">具备 Agent、工作流与 API 方案设计理解；按系统条件选择 API、RPA 或半自动方案</div></div>
-    <div class="match__r"><div class="match__need">AI 工具选型与支持</div><div class="match__exp">测评 20 多款 AI 工具，形成工具组合、质量标准与 SOP</div></div>
-    <div class="match__r"><div class="match__need">培训、文档与知识库</div><div class="match__exp">沉淀 100+ 场景化 Prompt 模板，设计过带来源和复核边界的 RAG 知识库</div></div>
-    <div class="match__r"><div class="match__need">跟踪 AI 与电商应用</div><div class="match__exp">持续测试模型、视频工具与 Agent 工作流，能形成评测与业务建议</div></div>
-    <div class="match__note">真实性边界：我目前没有长期负责过完整的跨境电商数据系统。但我具备可迁移的方法、产品设计能力，以及把 MVP 做出来的执行能力。</div>
-  </div>
-</section>
-
-<!-- ══════════════ ACT 3 · 方法 ══════════════ -->
-<section class="sec" id="workflow">
-  <div class="sec__head rise">
-    <span class="sec__idx">02 / METHOD</span>
-    <h2 class="sec__title">先判断价值，再决定要不要上 Agent</h2>
-    <p class="sec__concl">一个 Prompt 能解决的事情，不做复杂 Agent。只有涉及多步骤判断、知识来源、跨系统执行或数据反馈时，才提高系统复杂度。</p>
-  </div>
-  <div class="method rise">
-    <div class="method__s"><span class="method__n">STEP 01</span><div class="method__t">进入业务，梳理当前流程</div><div class="method__d">先把现在怎么做的搞清楚，不急着上工具。</div></div>
-    <div class="method__s"><span class="method__n">STEP 02</span><div class="method__t">找出高频、重复、耗时、易错的环节</div><div class="method__d">只在真正消耗人的地方动手。</div></div>
-    <div class="method__s"><span class="method__n">STEP 03</span><div class="method__t">选择 Prompt / Skill / Agent / RAG / API / RPA</div><div class="method__d">能用简单方案解决的，不上复杂系统。</div></div>
-    <div class="method__s"><span class="method__n">STEP 04</span><div class="method__t">先完成最小可用闭环</div><div class="method__d">先跑通一次完整流程，再做扩展。</div></div>
-    <div class="method__s"><span class="method__n">STEP 05</span><div class="method__t">用效率、质量、成本、使用率验证</div><div class="method__d">没被真正用起来的方案不算落地。</div></div>
-  </div>
-</section>
-
-<!-- ══════════════ ACT 4 · 企业 AI 内容生产体系 ══════════════ -->
-<section class="sec" id="content">
-  <div class="sec__head rise">
-    <span class="sec__idx">03 / CASE · 真实工作</span>
-    <h2 class="sec__title">企业 AI 内容生产体系</h2>
-    <p class="sec__concl">从割裂的个人手工制作，变成<b>有流程、有模板、有质检</b>的内容生产能力。</p>
-  </div>
-
-  <div class="sys rise">
-    <div class="panel">
-      <div class="panel__hd"><span>原来的业务问题</span><span class="mono">BEFORE</span></div>
-      <div class="panel__bd">
-        <ul class="tick tick--x">
-          <li>选题、脚本、素材与剪辑彼此割裂，衔接靠沟通</li>
-          <li>单条内容周期长，返工多，质量依赖个人经验</li>
-          <li>专业内容门槛高，不同人对政策口径理解不一致</li>
-          <li>发布之后的数据没有稳定反馈到下一轮选题</li>
-        </ul>
+    <div class="monitor__in">
+      <div class="monitor__slate">
+        <span>SCENE <b>01</b></span>
+        <span>TAKE <b>01</b></span>
+        <span>AI PRODUCT MANAGER</span>
+        <span>REEL <b>2026</b></span>
       </div>
-    </div>
-    <div class="panel">
-      <div class="panel__hd"><span>我具体负责什么</span><span class="mono">ROLE</span></div>
-      <div class="panel__bd">
-        <ul class="tick">
-          <li>AI 工具测评与工具组合选型</li>
-          <li>内容生产流程设计与 SOP 沉淀</li>
-          <li>100+ 场景化 Prompt 模板建设</li>
-          <li>选题、脚本、分镜、制作与成片交付</li>
-          <li>账号运营、质检与数据复盘</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="panel rise" style="margin-top:20px">
-    <div class="panel__hd"><span>完整工作流 · 每一步都有模板和检查表</span><span class="mono">WORKFLOW</span></div>
-    <div class="panel__bd">
-      <div class="flow">
-        <span class="flow__n">需求输入</span><span class="flow__sep">→</span>
-        <span class="flow__n">选题</span><span class="flow__sep">→</span>
-        <span class="flow__n flow__n--key">政策核验</span><span class="flow__sep">→</span>
-        <span class="flow__n">脚本</span><span class="flow__sep">→</span>
-        <span class="flow__n">分镜</span><span class="flow__sep">→</span>
-        <span class="flow__n">制作</span><span class="flow__sep">→</span>
-        <span class="flow__n">审核</span><span class="flow__sep">→</span>
-        <span class="flow__n">发布</span><span class="flow__sep">→</span>
-        <span class="flow__n">复盘</span>
-      </div>
-      <p style="font-size:13.5px;color:var(--ink-3);margin-top:16px;line-height:1.7">
-        「核验」被放到脚本之前——专业内容的口径风险主要在这里。模板化不是替代人，而是把人从重复劳动挪到判断上。
+      <h1 class="monitor__title">
+        <span class="ln"><i>把业务问题，</i></span>
+        <span class="ln"><i>做成<em>真能跑</em>的</i></span>
+        <span class="ln"><i>AI 工作流。</i></span>
+      </h1>
+      <p class="monitor__sub">
+        我不只使用 AI 生成内容。我看业务哪里重复、哪里低效，再决定用 <b>Prompt / Skill / Agent / RAG / API / RPA</b> 中的哪一种，然后亲手把它做成可以验证、可以复用、能持续变准的系统。
       </p>
+      <div class="monitor__cue">
+        <a class="cue cue--play" href="#c02"><i></i>播放作品</a>
+        <a class="cue cue--ghost" href="resume/lim-mingjie-ai-pm-resume.pdf" target="_blank" rel="noopener">下载简历 ↓</a>
+      </div>
     </div>
-  </div>
 
-  <div class="metrics rise" style="margin-top:20px">
-    <div class="metric"><div class="metric__v">100+</div><div class="metric__l">场景化 Prompt 模板</div><div class="metric__s">任职期间沉淀并复用，覆盖选题、脚本、分镜与质检场景</div></div>
-    <div class="metric"><div class="metric__v">1~2 → 3~4</div><div class="metric__l">单人日产出（条）</div><div class="metric__s">同一流程范围内的日产对比，团队内部统计</div></div>
-    <div class="metric"><div class="metric__v">约200%</div><div class="metric__l">产出效率提升</div><div class="metric__s">由单条周期缩短推算，团队内部统计，非财务审计数据</div></div>
-    <div class="metric"><div class="metric__v">约降低70%</div><div class="metric__l">返修率</div><div class="metric__s">阶段性统计，无完整统计表，不作为审计数据</div></div>
-    <div class="metric"><div class="metric__v">300+</div><div class="metric__l">累计内容产出</div><div class="metric__s">含企业账号与招商账号，任职期间累计发布</div></div>
-    <div class="metric"><div class="metric__v">4 条线</div><div class="metric__l">业务覆盖</div><div class="metric__s">企业品牌、研发费合规、全国招商与审计合规内容</div></div>
-  </div>
+    <div class="monitor__hint"><span>SCROLL</span><i></i></div>
+  </section>
 
-  <p class="rise" style="font-size:12px;color:var(--ink-4);margin-top:14px;font-family:var(--font-mono);line-height:1.7">
-    所有数字均为任职期间内部统计，截图与台账可现场调取核对。成本与效率不写成经过财务审计的精确数据。
-  </p>
-</section>
-
-<!-- ══════════════ ACT 5 · 账号矩阵 ══════════════ -->
-<section class="sec" id="accounts">
-  <div class="sec__head rise">
-    <span class="sec__idx">04 / ACCOUNTS</span>
-    <h2 class="sec__title">账号矩阵与代表作品</h2>
-    <p class="sec__concl">口径：任职期间由本人负责策划、制作与运营的内容账号。只展示后台截图时的存量数据，不提供外部链接。</p>
-  </div>
-
-  <div class="accounts rise">
-    <article class="acc">
-      <div class="acc__shot"><img src="/limmingjie-ai-pm/assets/accounts/chace.jpg" alt="查策网账号截图" loading="lazy" /></div>
-      <div class="acc__bd">
-        <div class="acc__name">查策网</div>
-        <div class="acc__pos">企业品牌、产品介绍、政策与科创服务内容</div>
-        <div class="acc__resp">内容负责人 · 策划与制作 · 账号运营</div>
-        <div class="acc__nums"><div class="acc__num"><b>4,497</b><span>账号粉丝（存量）</span></div></div>
-        <div class="acc__note">抖音主页截图时的账号粉丝存量，不等同任职期间净增粉丝。</div>
+  <!-- ════════ C02 · 数据 ════════ -->
+  <section class="clip" id="c02" data-clip="C02" data-name="结果" data-dur="00:00:12">
+    <div class="wrap">
+      <div class="clip__bar rv">
+        <span class="no">C02</span><span class="tc">00:00:18 → 00:00:30</span>
+        <span class="ln"></span><span class="dur">12s</span>
       </div>
-    </article>
-
-    <article class="acc">
-      <div class="acc__shot"><img src="/limmingjie-ai-pm/assets/accounts/narwhal.png" alt="独角鲸研发费合规指南账号截图" loading="lazy" /></div>
-      <div class="acc__bd">
-        <div class="acc__name">独角鲸研发费合规指南</div>
-        <div class="acc__pos">IPO 研发费用合规、研发费管理系统与政策解读</div>
-        <div class="acc__resp">内容负责人 · 编导与账号运营</div>
-        <div class="acc__nums"><div class="acc__num"><b>数字人 + AI</b><span>口播与视觉制作方式</span></div></div>
-        <div class="acc__note">制作方式的说明，非传播数据。</div>
+      <h2 class="clip__t rv">数字先落地，<em>每一个都带口径</em>。</h2>
+      <p class="clip__c rv">这些不是宣传语，是<b>可现场调取核对</b>的内部统计。成本与效率不写成经过财务审计的精确数据。</p>
+      <div class="dials rv">
+        <div class="dial"><div class="dial__v">300+</div><div class="dial__l">内容产出</div><div class="dial__s">任职期间累计发布的视频与图文（含企业与招商账号）</div></div>
+        <div class="dial"><div class="dial__v">3→0.5</div><div class="dial__l">单条周期（天）</div><div class="dial__s">选题确认到成片交付，不含审批等待</div></div>
+        <div class="dial"><div class="dial__v">100+</div><div class="dial__l">Prompt 模板</div><div class="dial__s">覆盖选题、脚本、分镜与质检场景</div></div>
+        <div class="dial"><div class="dial__v">137</div><div class="dial__l">竞品情报档案</div><div class="dial__s">竞品 / 事件 / 政策 / 话术全量建档</div></div>
       </div>
-    </article>
+    </div>
+  </section>
 
-    <article class="acc">
-      <div class="acc__shot"><img src="/limmingjie-ai-pm/assets/accounts/shenzhouxing.png" alt="独角鲸神州行账号截图" loading="lazy" /></div>
-      <div class="acc__bd">
-        <div class="acc__name">独角鲸 · 神州行（全国招商版）</div>
-        <div class="acc__pos">研发费管理系统全国服务与招商内容</div>
-        <div class="acc__resp">独立负责选题策划 · 脚本 · AI 素材生成 · 剪辑成片</div>
-        <div class="acc__nums"><div class="acc__num"><b>36</b><span>作品数</span></div></div>
-        <div class="acc__note">该账号以作品数与全流程职责为主，粉丝数与获赞数不作为传播成绩。</div>
+  <!-- ════════ C03 · 作品轨（真实抖音） ════════ -->
+  <section class="clip" id="c03" data-clip="C03" data-name="作品" data-dur="00:00:22">
+    <div class="wrap">
+      <div class="clip__bar rv">
+        <span class="no">C03</span><span class="tc">00:00:30 → 00:00:52</span>
+        <span class="ln"></span><span class="dur">22s</span>
       </div>
-    </article>
+      <h2 class="clip__t rv">三条<em>已发布</em>的作品，抖音可直接看。</h2>
+      <p class="clip__c rv">从企业品牌到全国招商，<b>全流程由本人完成</b>。神州行那条是独立负责选题、脚本、AI 素材生成与剪辑成片。</p>
 
-    <article class="acc">
-      <div class="acc__shot"><img src="/limmingjie-ai-pm/assets/accounts/audit.jpg" alt="独角鲸研发费用审计账号截图" loading="lazy" /></div>
-      <div class="acc__bd">
-        <div class="acc__name">独角鲸 - 研发费用审计</div>
-        <div class="acc__pos">研发费用审计、税务稽查风险与合规解读内容</div>
-        <div class="acc__resp">内容负责人 · 选题与制作 · 账号运营</div>
-        <div class="acc__nums">
-          <div class="acc__num"><b>4,455</b><span>关注者</span></div>
-          <div class="acc__num"><b>190</b><span>累计视频</span></div>
-          <div class="acc__num"><b>22.6万</b><span>昨日新增播放</span></div>
-          <div class="acc__num"><b>26.2万</b><span>单条最高播放</span></div>
+      <div class="track rv">
+        <div class="track__hd"><span class="v1">V1</span><span>作品轨 · 3 clips · 真实发布</span></div>
+        <div class="track__r">
+          <div class="track__no">01</div>
+          <div class="track__b">
+            <div class="track__acc">独角鲸 · 神州行（全国招商版）</div>
+            <div class="track__t">高企、IPO、税务稽查三张网接到同一个数据库</div>
+            <div class="track__d">把三条政策线接到同一个数据来源上，讲清研发费数据的价值。独立完成选题策划 · 脚本 · AI 素材生成 · 剪辑成片。</div>
+          </div>
+          <a class="track__go" href="https://v.douyin.com/tvaTDnOoD5E/" target="_blank" rel="noopener">抖音看 ↗</a>
         </div>
-        <div class="acc__note">视频号助手后台，2026-09-14 截图时数据。「昨日新增播放」为单日口径，与单条视频播放不可相加。</div>
-      </div>
-    </article>
-  </div>
-
-  <div class="panel rise" style="margin-top:20px">
-    <div class="panel__hd"><span>后台数据截图 · 视频号助手</span><span class="mono">2026-09-14</span></div>
-    <div class="panel__bd" style="padding:0">
-      <img src="/limmingjie-ai-pm/assets/accounts/audit-dashboard-20260914.png" alt="视频号助手后台数据截图" loading="lazy" style="width:100%;border-radius:0 0 var(--r-l) var(--r-l)" />
-    </div>
-  </div>
-
-  <p class="rise" style="font-size:12px;color:var(--ink-4);margin-top:14px;font-family:var(--font-mono);line-height:1.7">
-    口径说明：简历中的「3 个账号」为当时统计口径。「独角鲸 · 神州行（全国招商版）」不属于简历统计期内的既有成果，因此单独列出，不计入账号总数。
-  </p>
-</section>
-
-<!-- ══════════════ ACT 6 · 3C 内容生产流水线（最高权重） ══════════════ -->
-<section class="sec" id="c3">
-  <div class="sec__head rise">
-    <span class="sec__idx">05 / CORE · 最高权重</span>
-    <h2 class="sec__title">从一条音响视频，到一套可规模化的 3C 内容生产系统</h2>
-    <p class="sec__concl">把产品资料变成<b>可复用、可质检、能反馈</b>的内容生产线。先证明能快速完成具体交付，再证明能把一次制作变成长期、规模化的生产能力。</p>
-  </div>
-
-  <div class="wf rise">
-    <div class="wf__s"><div class="wf__n">01</div><div class="wf__t">产品资料输入</div><div class="wf__d">产品手册、参数表、平台页面、客服问答</div></div>
-    <div class="wf__s"><div class="wf__n">02</div><div class="wf__t">参数结构化与校验</div><div class="wf__d">统一字段，标出缺失与冲突项</div></div>
-    <div class="wf__s"><div class="wf__n">03</div><div class="wf__t">卖点和场景匹配</div><div class="wf__d">参数 → 用户价值 → 使用场景</div></div>
-    <div class="wf__s"><div class="wf__n">04</div><div class="wf__t">竞品与爆款结构分析</div><div class="wf__d">看结构，不抄内容</div></div>
-    <div class="wf__s wf__s--hl"><div class="wf__n">05</div><div class="wf__t">多版本脚本</div><div class="wf__d">同一 SKU 产出不同钩子与不同平台版本</div></div>
-    <div class="wf__s"><div class="wf__n">06</div><div class="wf__t">分镜与素材方案</div><div class="wf__d">镜头、运镜、字幕、音效、BGM</div></div>
-    <div class="wf__s"><div class="wf__n">07</div><div class="wf__t">AI 生成与剪辑</div><div class="wf__d">批量生成素材并完成成片</div></div>
-    <div class="wf__s wf__s--hl"><div class="wf__n">08</div><div class="wf__t">人工质检</div><div class="wf__d">产品事实终审与品牌把关</div></div>
-    <div class="wf__s"><div class="wf__n">09</div><div class="wf__t">多平台输出</div><div class="wf__d">按平台规格适配画面与文案</div></div>
-    <div class="wf__s wf__s--hl"><div class="wf__n">10</div><div class="wf__t">数据反馈</div><div class="wf__d">回到下一轮内容生产</div></div>
-  </div>
-
-  <div class="panel rise" style="margin-top:24px">
-    <div class="panel__hd"><span>参数 → 用户价值 → 内容场景</span><span class="mono">MAPPING</span></div>
-    <div class="panel__bd" style="padding:6px 20px 14px">
-      <table class="ptable">
-        <thead><tr><th>参数</th><th>用户价值</th><th>内容场景</th></tr></thead>
-        <tbody>
-          <tr><td>主动降噪</td><td>减少环境干扰</td><td>地铁、飞机、办公室</td></tr>
-          <tr><td>IP 防水</td><td>户外使用更安心</td><td>露营、泳池、雨天</td></tr>
-          <tr><td>低延迟模式</td><td>提高声画同步</td><td>游戏、追剧</td></tr>
-          <tr><td>长续航</td><td>减少充电频率</td><td>出差、旅行、通勤</td></tr>
-          <tr><td>双设备连接</td><td>工作设备切换方便</td><td>手机与电脑办公</td></tr>
-          <tr><td>重低音</td><td>增强氛围感</td><td>聚会、健身、户外</td></tr>
-        </tbody>
-      </table>
-      <p style="font-size:12.5px;color:var(--ink-4);margin-top:12px">参数到场景的映射是内容生成的依据，脚本不会自由发挥产品参数。</p>
-    </div>
-  </div>
-
-  <div class="skills rise" style="margin-top:24px">
-    <div class="skill">
-      <div class="skill__tag">CORE SKILL</div>
-      <div class="skill__n">产品资料整理</div>
-      <div class="skill__io">
-        <div><span class="k">Input</span><span class="v">产品手册 / 参数表 / 平台页面 / 客服问答</span></div>
-        <div><span class="k">Output</span><span class="v">结构化产品知识卡（参数、卖点、FAQ、禁用表达）</span></div>
-      </div>
-      <div class="skill__why">先有一份可信的资料底座，后面所有内容才有依据。</div>
-    </div>
-    <div class="skill">
-      <div class="skill__tag">CORE SKILL</div>
-      <div class="skill__n">多版本脚本生成</div>
-      <div class="skill__io">
-        <div><span class="k">Input</span><span class="v">产品知识卡 + 平台 + 目标人群</span></div>
-        <div><span class="k">Output</span><span class="v">不同钩子、不同结构的多版本脚本</span></div>
-      </div>
-      <div class="skill__why">同一 SKU 需要多条内容，靠人工重写成本太高。</div>
-    </div>
-    <div class="skill">
-      <div class="skill__tag">CORE SKILL</div>
-      <div class="skill__n">产品事实质检</div>
-      <div class="skill__io">
-        <div><span class="k">Input</span><span class="v">成片字幕 / 脚本 + 产品知识卡</span></div>
-        <div><span class="k">Output</span><span class="v">参数、型号、品牌、绝对化表达与平台风险清单</span></div>
-      </div>
-      <div class="skill__why">参数写错是 3C 内容里最贵的错误，必须机器先查一遍。</div>
-    </div>
-  </div>
-
-  <p class="rise" style="font-size:12.5px;color:var(--ink-4);margin-top:14px;font-family:var(--font-mono)">
-    MVP 阶段只做上面三个 Skill。业务量增加、场景变复杂之后，再拆成独立 Agent（用户洞察 / 竞品分析 / 分镜 / 本地化 / 数据复盘），避免一开始就过度设计。
-  </p>
-
-  <div class="bound rise" style="margin-top:24px">
-    <div class="bound__c bound__c--ai">
-      <div class="bound__h"><span class="ic">[01]</span>AI 质检范围 · 机器先查一遍</div>
-      <ul class="tick"><li>参数与型号一致性</li><li>品牌名称与写法</li><li>字幕与口播是否一致</li><li>绝对化、夸大或违规表达</li><li>平台规范与敏感词</li></ul>
-    </div>
-    <div class="bound__c bound__c--human">
-      <div class="bound__h"><span class="ic">[02]</span>人工审核边界 · 最终由人决定</div>
-      <ul class="tick"><li>产品事实终审</li><li>创意与表达方式选择</li><li>品牌调性把关</li><li>版权与素材合规</li><li>是否发布、何时发布</li></ul>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ ACT 7 · 音响视频（面试任务） ══════════════ -->
-<section class="sec" id="speaker">
-  <div class="sec__head rise">
-    <span class="sec__idx">06 / TASK</span>
-    <h2 class="sec__title">音响产品视频</h2>
-    <p class="sec__concl">拿到音响产品资料与参数，按短视频要求完成一条产品内容。<b>两条竖屏成片，均可在本页直接播放。</b></p>
-  </div>
-
-  <div class="videos rise">
-    <div class="vid">
-      <video controls playsinline preload="metadata" poster="/limmingjie-ai-pm/assets/video/speaker-01-poster.jpg">
-        <source src="/limmingjie-ai-pm/assets/video/speaker-01.mp4" type="video/mp4" />
-      </video>
-      <div class="vid__bd">
-        <div class="vid__t">音响产品视频 · 版本一</div>
-        <div class="vid__spec">720×1280 竖屏 · 15.07 秒</div>
-        <div class="vid__cap">垂直场景切入：把「体积小」这个参数直接翻译成用户能看懂的画面。</div>
+        <div class="track__r">
+          <div class="track__no">02</div>
+          <div class="track__b">
+            <div class="track__acc">查策网</div>
+            <div class="track__t">查策 AI 科创平台正式上线</div>
+            <div class="track__d">用产品上线信息作入口，把企业品牌、产品能力与政策服务串成一条内容。策划 · 脚本 · 制作 · 发布。</div>
+          </div>
+          <a class="track__go" href="https://v.douyin.com/6r87UrzkyTM/" target="_blank" rel="noopener">抖音看 ↗</a>
+        </div>
+        <div class="track__r">
+          <div class="track__no">03</div>
+          <div class="track__b">
+            <div class="track__acc">独角鲸研发费合规指南</div>
+            <div class="track__t">IPO 研发费用合规全攻略</div>
+            <div class="track__d">把 IPO 研发费合规规则拆成业务人能理解的问题，用口播加视觉讲清楚。选题 · 脚本 · 制作 · 发布。</div>
+          </div>
+          <a class="track__go" href="https://v.douyin.com/W8sCBsXM0c0/" target="_blank" rel="noopener">抖音看 ↗</a>
+        </div>
       </div>
     </div>
-    <div class="vid">
-      <video controls playsinline preload="metadata" poster="/limmingjie-ai-pm/assets/video/speaker-02-poster.jpg">
-        <source src="/limmingjie-ai-pm/assets/video/speaker-02.mp4" type="video/mp4" />
-      </video>
-      <div class="vid__bd">
-        <div class="vid__t">音响产品视频 · 版本二</div>
-        <div class="vid__spec">720×1280 竖屏 · 10.01 秒</div>
-        <div class="vid__cap">产品特写切入：用产品本体的质感与识别度承担前 3 秒的信息量。</div>
+  </section>
+
+  <!-- ════════ C04 · 两个工作台 ════════ -->
+  <section class="clip" id="c04" data-clip="C04" data-name="系统" data-dur="00:00:26">
+    <div class="wrap">
+      <div class="clip__bar rv">
+        <span class="no">C04</span><span class="tc">00:00:52 → 00:01:18</span>
+        <span class="ln"></span><span class="dur">26s</span>
+      </div>
+      <h2 class="clip__t rv">两个<em>可点开</em>的系统，不是截图。</h2>
+      <p class="clip__c rv">面试时不用我讲，<b>你直接点</b>。里面全部是真实运行的数据。</p>
+
+      <div class="bin rv">
+        <div class="bin__i">
+          <div class="bin__k">Multi-Agent</div>
+          <div class="bin__t">AI 编导工作台</div>
+          <div class="bin__d">3-Agent 管线：趋势雷达 → 爆款脚本 → 分镜生成。点开任一案例，可见完整运行过程与三层评测。</div>
+          <div class="bin__meta">
+            <div><span class="k">案例</span><span class="v">73</span></div>
+            <div><span class="k">过程记录</span><span class="v">95</span></div>
+            <div><span class="k">评测报告</span><span class="v">81</span></div>
+            <div><span class="k">评测维度</span><span class="v">12</span></div>
+          </div>
+          <div style="margin-top:14px"><a class="track__go" href="https://wynn-lim.github.io/competitor-intel-workbench/workbench-app/" target="_blank" rel="noopener">打开 ↗</a></div>
+        </div>
+        <div class="bin__i">
+          <div class="bin__k">Internal System</div>
+          <div class="bin__t">独角鲸 · 竞品情报工作台</div>
+          <div class="bin__d">自己盯梢、自动比对、人工判定后才进库。竞品档案、事件时间线、政策监控与话术库。</div>
+          <div class="bin__meta">
+            <div><span class="k">竞品档案</span><span class="v">137</span></div>
+            <div><span class="k">情报事件</span><span class="v">120</span></div>
+            <div><span class="k">政策监控</span><span class="v">18</span></div>
+            <div><span class="k">应对话术</span><span class="v">66</span></div>
+          </div>
+          <div style="margin-top:14px"><a class="track__go" href="https://wynn-lim.github.io/competitor-intel-workbench/workbench/" target="_blank" rel="noopener">打开 ↗</a></div>
+        </div>
+        <div class="bin__i">
+          <div class="bin__k">Document</div>
+          <div class="bin__t">AI 编导 Agent PRD</div>
+          <div class="bin__d">7 章完整产品需求文档，第 7 章为工作台项目实证：流水线、评测闭环、校准闭环与诚实边界。</div>
+          <div class="bin__meta">
+            <div><span class="k">章节</span><span class="v">7</span></div>
+            <div><span class="k">项目实证</span><span class="v">已附</span></div>
+            <div><span class="k">工具链</span><span class="v">可灵 / 即梦</span></div>
+            <div><span class="k">状态</span><span class="v">公开</span></div>
+          </div>
+          <div style="margin-top:14px"><a class="track__go" href="https://wynn-lim.github.io/competitor-intel-workbench/director/" target="_blank" rel="noopener">阅读 ↗</a></div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="panel rise" style="margin-top:20px">
-    <div class="panel__hd"><span>制作步骤 · 我的职责：参数理解 · 卖点取舍 · 内容结构 · 成片交付</span><span class="mono">PROCESS</span></div>
-    <div class="panel__bd">
-      <ol class="tick" style="counter-reset:none;padding-left:0">
-        <li>先读产品资料，把参数和卖点分开</li>
-        <li>判断哪个参数最容易被一眼看懂，作为前 3 秒的钩子</li>
-        <li>按「钩子 → 产品 → 场景 → 行动」组织结构</li>
-        <li>生成素材、剪辑、检查字幕与产品事实</li>
-        <li>输出可直接发布的竖屏成片</li>
-      </ol>
-      <p style="font-size:12.5px;color:var(--warn);margin-top:14px;line-height:1.7">
-        边界：这条视频是一个比较简单的应用场景。它能证明我可以快速理解产品并完成内容交付，但不代表我已经建成了完整的内容系统。
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ ACT 8 · AI 编导工作台 ══════════════ -->
-<section class="sec" id="director">
-  <div class="sec__head rise">
-    <span class="sec__idx">07 / PRODUCT 01</span>
-    <h2 class="sec__title">AI 编导工作台</h2>
-    <p class="sec__concl">能把编导经验拆成标准输入输出与质检节点。<b>这不是概念稿——73 个案例全部真实跑通，可点开看每一步的运行过程。</b></p>
-  </div>
-
-  <div class="reel-link rise">
-    <div class="reel-link__meta">
-      <span class="reel-link__k">PRODUCT DEMO · 可点开</span>
-      <div class="reel-link__t">3-Agent 内容生产管线</div>
-      <p class="reel-link__d">趋势雷达 → 爆款脚本 → 分镜生成。打开即见一个完整案例：15 步运行过程（工具调用、real / unavailable 标注、token、耗时）、三层评测报告、8 镜分镜表。73 个案例可切换。</p>
-      <div class="reel-link__stats">
-        <div><b>73</b><span>实跑案例</span></div>
-        <div><b>95</b><span>过程记录</span></div>
-        <div><b>81</b><span>评测报告</span></div>
-        <div><b>12</b><span>评测维度</span></div>
+  <!-- ════════ C05 · 方法与边界 ════════ -->
+  <section class="clip" id="c05" data-clip="C05" data-name="方法" data-dur="00:00:20">
+    <div class="wrap">
+      <div class="clip__bar rv">
+        <span class="no">C05</span><span class="tc">00:01:18 → 00:01:38</span>
+        <span class="ln"></span><span class="dur">20s</span>
       </div>
-      <a class="btn btn--primary" href="https://wynn-lim.github.io/competitor-intel-workbench/workbench-app/" target="_blank" rel="noopener">
-        打开工作台 <span class="btn__arrow">↗</span>
-      </a>
-    </div>
-    <div class="reel-link__shots">
-      <img src="/limmingjie-ai-pm/assets/cases/ai-director/02-agent-run.jpg" alt="Agent 运行过程" loading="lazy" />
-      <img src="/limmingjie-ai-pm/assets/cases/ai-director/04-storyboard.jpg" alt="分镜表" loading="lazy" />
-      <img src="/limmingjie-ai-pm/assets/cases/ai-director/05-review.jpg" alt="评测报告" loading="lazy" />
-      <img src="/limmingjie-ai-pm/assets/cases/ai-director/01-input.jpg" alt="需求输入" loading="lazy" />
-    </div>
-  </div>
-
-  <div class="case rise">
-    <div class="case__hd">
-      <div>
-        <div class="case__k">MULTI-AGENT · 内容工作流</div>
-        <div class="case__t">AI 编导工作台 · 产品设计</div>
-        <div class="case__role">独立产品设计 · 编导工作流设计 · 提示词与质检节点</div>
+      <h2 class="clip__t rv">先判断价值，<em>再决定要不要上 Agent</em>。</h2>
+      <p class="clip__c rv">一个 Prompt 能解决的事情，不做复杂 Agent。只有涉及多步骤判断、知识来源、跨系统执行或数据反馈时，才提高系统复杂度。</p>
+      <div class="bin rv">
+        <div class="bin__i"><div class="bin__k">STEP 01</div><div class="bin__t">进入业务，梳理当前流程</div><div class="bin__d">先把现在怎么做的搞清楚，不急着上工具。</div></div>
+        <div class="bin__i"><div class="bin__k">STEP 02</div><div class="bin__t">找出高频、重复、耗时、易错的环节</div><div class="bin__d">只在真正消耗人的地方动手。</div></div>
+        <div class="bin__i"><div class="bin__k">STEP 03</div><div class="bin__t">选 Prompt / Skill / Agent / RAG / API / RPA</div><div class="bin__d">能用简单方案解决的，不上复杂系统。</div></div>
+        <div class="bin__i"><div class="bin__k">STEP 04</div><div class="bin__t">先完成最小可用闭环</div><div class="bin__d">先跑通一次完整流程，再做扩展。</div></div>
+        <div class="bin__i"><div class="bin__k">STEP 05</div><div class="bin__t">用效率、质量、成本、使用率验证</div><div class="bin__d">没被真正用起来的方案不算落地。</div></div>
+        <div class="bin__i"><div class="bin__k">边界</div><div class="bin__t">做不到的，直接说做不到</div><div class="bin__d">没有长期负责过完整跨境电商数据系统——但方法、产品设计与把 MVP 做出来的执行能力可迁移。</div></div>
       </div>
-      <span class="case__st">产品 Demo｜部分方法已用于实际内容生产</span>
     </div>
-    <div class="case__sum">把编导的经验拆成标准输入、标准输出、Agent 协作与人工质检节点，让选题、脚本、分镜和质检不再是三件分开的事。</div>
-    <div class="case__abs"><span>场景拆解</span><span>流程设计</span><span>提示词设计</span><span>质检节点设计</span></div>
-    <div class="case__beats">
-      <div class="beat"><div class="beat__img"><img src="/limmingjie-ai-pm/assets/cases/ai-director/01-input.jpg" alt="" loading="lazy" /></div><div class="beat__n">BEAT 01</div><div class="beat__t">需求输入</div><div class="beat__d">一个对话式入口加一个结构化表单（内容方向、目标平台、账号现状、参考风格）。输入先标准化，后面才不会反复返工。</div></div>
-      <div class="beat"><div class="beat__img"><img src="/limmingjie-ai-pm/assets/cases/ai-director/02-agent-run.jpg" alt="" loading="lazy" /></div><div class="beat__n">BEAT 02</div><div class="beat__t">Agent 工作过程</div><div class="beat__d">总耗时、Token 消耗、真实数据与不可用数据的条数，以及每个 Agent 节点的调用明细。过程可见，才能定位问题。</div></div>
-      <div class="beat"><div class="beat__img"><img src="/limmingjie-ai-pm/assets/cases/ai-director/03-script.jpg" alt="" loading="lazy" /></div><div class="beat__n">BEAT 03</div><div class="beat__t">脚本结果</div><div class="beat__d">主题、标题候选、结构、完整台词，以及预测完播率与互动率。结构固定，质量才可以被检查。</div></div>
-      <div class="beat"><div class="beat__img"><img src="/limmingjie-ai-pm/assets/cases/ai-director/04-storyboard.jpg" alt="" loading="lazy" /></div><div class="beat__n">BEAT 04</div><div class="beat__t">分镜表</div><div class="beat__d">镜头号、时长、景别、运镜、画面、台词、音效、BGM、剪辑，外加节奏原则和拍摄提示。下游能直接照着做。</div></div>
-      <div class="beat"><div class="beat__img"><img src="/limmingjie-ai-pm/assets/cases/ai-director/05-review.jpg" alt="" loading="lazy" /></div><div class="beat__n">BEAT 05</div><div class="beat__t">质检与评测</div><div class="beat__d">规则评测报告、各 Agent 的评分与待改进项、人工质检打分表。AI 负责一致性，人负责判断，边界写清楚。</div></div>
-      <div class="beat"><div class="beat__img"><img src="/limmingjie-ai-pm/assets/cases/ai-director/06-history.jpg" alt="" loading="lazy" /></div><div class="beat__n">BEAT 06</div><div class="beat__t">校准闭环与历史案例</div><div class="beat__d">用真实发布结果回填预测偏差，记录每一次版本调整的原因。只有预测偏差被持续记录，系统才会越用越准。</div></div>
-    </div>
-    <div class="case__dd">
-      <div class="dd"><div class="dd__h">原流程问题</div><ul><li>选题、脚本与分镜彼此脱节，衔接靠反复沟通</li><li>修改意见分散在聊天记录里，无法沉淀</li><li>没有质检标准，返工只能在成片之后发现</li></ul></div>
-      <div class="dd"><div class="dd__h">Agent / Skill 职责</div><ul><li>趋势雷达：读取赛道热度、头部账号与生命周期，输出结构化判断与置信度</li><li>爆款脚本：按平台与人群产出多版本脚本，附分段结构与完整台词</li><li>分镜生成：把脚本转成可执行的镜头表</li><li>规则评测 + 人工质检 + 离线校准：把人的判断留在关键环节</li></ul></div>
-      <div class="dd"><div class="dd__h">我负责的部分</div><ul><li>真实编导场景拆解与流程设计</li><li>每个节点的提示词与结构化输出定义</li><li>质检维度、评分方式与人工确认点设计</li><li>原型实现的需求表达与验收标准</li></ul></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════ ACT 9 · 竞品情报工作台 ══════════════ -->
-<section class="sec" id="intel">
-  <div class="sec__head rise">
-    <span class="sec__idx">08 / PRODUCT 02</span>
-    <h2 class="sec__title">独角鲸 · 竞品情报工作台</h2>
-    <p class="sec__concl">研发费管理系统赛道的竞品情报系统：<b>自己盯梢、自动比对、人工判定后才进库</b>。同样可点开看真实数据。</p>
-  </div>
-
-  <div class="reel-link rise">
-    <div class="reel-link__meta">
-      <span class="reel-link__k">INTERNAL SYSTEM · 可点开</span>
-      <div class="reel-link__t">竞品情报 · 采集 / 比对 / 判定闭环</div>
-      <p class="reel-link__d">138 个盯梢页面定时采集，抓回来的内容先做事实卡，再由人点头才进库。竞品档案、事件时间线、政策监控、话术库、待核实清单与 139 份选型对比文档。</p>
-      <div class="reel-link__stats">
-        <div><b>137</b><span>竞品档案</span></div>
-        <div><b>120</b><span>情报事件</span></div>
-        <div><b>18</b><span>政策监控</span></div>
-        <div><b>66</b><span>应对话术</span></div>
+  <!-- ════════ C06 · 收场 ════════ -->
+  <section class="final" id="c06" data-clip="C06" data-name="收场" data-dur="00:00:14">
+    <div class="wrap"><div class="final__in">
+      <div class="clip__bar rv" style="margin-bottom:30px">
+        <span class="no">C06</span><span class="tc">00:01:38 → 00:01:52</span>
+        <span class="ln"></span><span class="dur">14s</span>
       </div>
-      <a class="btn btn--primary" href="https://wynn-lim.github.io/competitor-intel-workbench/workbench/" target="_blank" rel="noopener">
-        打开工作台 <span class="btn__arrow">↗</span>
-      </a>
-    </div>
-    <div class="reel-link__shots reel-link__shots--wide">
-      <img src="/limmingjie-ai-pm/assets/accounts/audit-dashboard-20260914.png" alt="竞品情报工作台" loading="lazy" />
-      <img src="/limmingjie-ai-pm/assets/accounts/audit-metrics-20260914.jpg" alt="账号数据" loading="lazy" />
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ ACT 10 · RAG 产品 ══════════════ -->
-<section class="sec" id="rag">
-  <div class="sec__head rise">
-    <span class="sec__idx">09 / PRODUCT 03</span>
-    <h2 class="sec__title">研发费合规专家</h2>
-    <p class="sec__concl">围绕研发费用加计扣除的合规咨询，设计一套<b>带来源、带边界、可复核</b>的领域知识问答方案。</p>
-  </div>
-  <div class="case rise">
-    <div class="case__hd">
-      <div>
-        <div class="case__k">RAG · 领域知识库产品设计</div>
-        <div class="case__t">研发费合规专家 · 产品方案</div>
-        <div class="case__role">独立产品设计 · 业务场景定义 · 知识分层与检索方案 · PRD 与原型</div>
+      <div class="final__k rv"><span>理解业务</span><span>快速验证</span><span>沉淀系统</span></div>
+      <h2 class="final__t rv">我希望交付的，不只是一个 AI 功能，<em>而是一套持续创造价值的工作方式。</em></h2>
+      <p class="final__p rv">如果加入公司，我会先选一款重点耳机或音响产品，跑通一个真正有人使用的 AI 工作流，再逐步复制到更多 SKU 和部门。</p>
+      <div class="final__cue rv">
+        <a class="cue cue--play" href="resume/lim-mingjie-ai-pm-resume.pdf" target="_blank" rel="noopener">下载简历 ↓</a>
+        <a class="cue cue--ghost" href="https://wynn-lim.github.io/competitor-intel-workbench/" target="_blank" rel="noopener">两个工作台 ↗</a>
       </div>
-      <span class="case__st">产品方案｜RAG 页面 Demo</span>
-    </div>
-    <div class="case__sum">规划的知识库规模、准确率与效率提升都属于设计目标，不作为已经上线的结果。本次展示以界面截图为准。</div>
-    <div class="case__beats">
-      <div class="beat"><div class="beat__img"><img src="/limmingjie-ai-pm/assets/cases/rag/01-prd-bg.jpg" alt="" loading="lazy" /></div><div class="beat__n">BEAT 01</div><div class="beat__t">需求背景</div><div class="beat__d">研发费加计扣除的政策口径复杂，业务人员的提问往往缺少关键条件。</div></div>
-      <div class="beat"><div class="beat__img"><img src="/limmingjie-ai-pm/assets/cases/rag/02-architecture.jpg" alt="" loading="lazy" /></div><div class="beat__n">BEAT 02</div><div class="beat__t">知识分层与检索架构</div><div class="beat__d">按政策 / 流程 / 案例分层，检索结果必须带文号与来源。</div></div>
-      <div class="beat"><div class="beat__img"><img src="/limmingjie-ai-pm/assets/cases/rag/03-prototype.jpg" alt="" loading="lazy" /></div><div class="beat__n">BEAT 03</div><div class="beat__t">原型</div><div class="beat__d">问答界面把「依据」和「结论」分开呈现，不确定就说不确定。</div></div>
-      <div class="beat"><div class="beat__img"><img src="/limmingjie-ai-pm/assets/cases/rag/04-rag-design.jpg" alt="" loading="lazy" /></div><div class="beat__n">BEAT 04</div><div class="beat__t">检索与评估方案</div><div class="beat__d">定义召回质量与答案可复核性的评估维度。</div></div>
-      <div class="beat"><div class="beat__img"><img src="/limmingjie-ai-pm/assets/cases/rag/05-question.jpg" alt="" loading="lazy" /></div><div class="beat__n">BEAT 05</div><div class="beat__t">问答示例</div><div class="beat__d">每条结论附来源与适用边界，超出范围的问题明确拒绝。</div></div>
-      <div class="beat"><div class="beat__img"><img src="/limmingjie-ai-pm/assets/cases/rag/qa-home.jpg" alt="" loading="lazy" /></div><div class="beat__n">BEAT 06</div><div class="beat__t">产品首页</div><div class="beat__d">先问条件再给结论，避免把复杂合规问题简化成一句话答案。</div></div>
-    </div>
-  </div>
-</section>
+    </div></div>
+  </section>
 
-<!-- ══════════════ ACT 11 · 四个项目 ══════════════ -->
-<section class="sec" id="projects">
-  <div class="sec__head rise">
-    <span class="sec__idx">10 / ONBOARD</span>
-    <h2 class="sec__title">加入公司后能做什么：四个项目</h2>
-    <p class="sec__concl">围绕耳机音响类 3C 业务，先做<b>能跑通、能被业务真正用起来</b>的四个项目。</p>
-  </div>
-  <div class="projects rise">
-    <div class="proj">
-      <div class="proj__id">PROJECT A</div>
-      <div class="proj__t">3C 产品内容自动化生产线</div>
-      <div class="proj__p"><b>问题：</b>同一款耳机或音响要在多个平台产出多个版本的内容，资料分散、参数容易写错、制作周期长。</div>
-      <div class="proj__s"><b>方案：</b>统一产品资料，用三个核心 Skill 生成多场景、多平台、多语言的脚本与视频，并保留人工终审。</div>
-      <div class="proj__m"><span>制作时间</span><span>返修率</span><span>素材数量</span><span>点击率</span><span>转化率</span></div>
-    </div>
-    <div class="proj">
-      <div class="proj__id">PROJECT B</div>
-      <div class="proj__t">店铺数据自动周报与经营看板</div>
-      <div class="proj__p"><b>问题：</b>店铺、广告与库存数据分散在不同后台，靠人工导表汇总，口径不一致且滞后。</div>
-      <div class="proj__s"><b>方案：</b>确认数据源，优先走 API；没有 API 时评估 RPA 或定时导出；统一口径后输出周报与异常建议。</div>
-      <div class="proj__m"><span>汇总耗时</span><span>口径一致率</span><span>异常发现时效</span><span>周报使用率</span></div>
-    </div>
-    <div class="proj">
-      <div class="proj__id">PROJECT C</div>
-      <div class="proj__t">评论、售后与用户反馈分析 Agent</div>
-      <div class="proj__p"><b>问题：</b>评论、客服记录和退款原因分散，产品问题与表达问题混在一起，很难分头改进。</div>
-      <div class="proj__s"><b>方案：</b>汇总多来源反馈，按型号和问题分类，区分产品问题、表达问题、物流问题与用户误解，分别反馈对应部门。</div>
-      <div class="proj__m"><span>处理条数</span><span>分类准确率</span><span>问题闭环率</span><span>同类问题复现率</span></div>
-    </div>
-    <div class="proj">
-      <div class="proj__id">PROJECT D</div>
-      <div class="proj__t">产品知识库与 GEO 内容资产</div>
-      <div class="proj__p"><b>问题：</b>产品参数、卖点、FAQ 分散在各处，对外表述不统一，也不容易被搜索与理解。</div>
-      <div class="proj__s"><b>方案：</b>为每个 SKU 建立带来源和更新时间的知识卡，统一参数、卖点、FAQ 与禁用表达，并围绕真实用户问题生产结构化内容。</div>
-      <div class="proj__m"><span>知识卡覆盖率</span><span>信息一致率</span><span>内容引用情况</span><span>监测频次</span></div>
-    </div>
-  </div>
-  <p class="rise" style="font-size:12px;color:var(--warn);margin-top:14px;font-family:var(--font-mono);line-height:1.7">
-    GEO 目标：提高品牌信息被搜索、理解和引用的概率，并建立持续监测机制。不承诺必然被大模型推荐。公司具体使用的跨境销售平台以入职后确认，方案按「API 优先、无 API 时评估 RPA 或定时导出」的通用条件设计。
-  </p>
-</section>
-
-<!-- ══════════════ ACT 12 · 30/60/90 ══════════════ -->
-<section class="sec" id="plan">
-  <div class="sec__head rise">
-    <span class="sec__idx">11 / ROADMAP</span>
-    <h2 class="sec__title">30 / 60 / 90 天计划</h2>
-    <p class="sec__concl">先熟悉业务、选准试点，再跑通闭环，最后<b>沉淀成可复制的系统</b>。</p>
-  </div>
-  <div class="plan rise">
-    <div class="plan__c">
-      <div class="plan__hd"><div class="plan__w">0 – 30 天</div><div class="plan__t">先熟悉业务，选准试点</div></div>
-      <div class="plan__bd"><ol>
-        <li>熟悉 SKU、店铺平台、ERP 与部门流程</li>
-        <li>盘点现有 AI 工具与使用情况</li>
-        <li>建立 AI 需求池，按频率与痛点排序</li>
-        <li>选择试点 SKU，确认数据与审核条件</li>
-      </ol></div>
-    </div>
-    <div class="plan__c">
-      <div class="plan__hd"><div class="plan__w">31 – 60 天</div><div class="plan__t">跑通一个闭环</div></div>
-      <div class="plan__bd"><ol>
-        <li>跑通一个 SKU 的内容工作流</li>
-        <li>完成一个渠道的自动周报 MVP</li>
-        <li>记录效率、准确率与业务反馈</li>
-        <li>根据使用情况调整方案，形成可复用模板</li>
-      </ol></div>
-    </div>
-    <div class="plan__c">
-      <div class="plan__hd"><div class="plan__w">61 – 90 天</div><div class="plan__t">扩大并沉淀</div></div>
-      <div class="plan__bd"><ol>
-        <li>扩展到更多 SKU 与渠道</li>
-        <li>接入评论分析与产品知识库</li>
-        <li>沉淀 SOP、检查表与培训材料</li>
-        <li>输出下一季度 AI 应用路线图</li>
-      </ol></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ ACT 13 · 收场 ══════════════ -->
-<section class="close" id="close">
-  <div class="shell">
-    <div class="close__k rise"><span>理解业务</span><span>快速验证</span><span>沉淀系统</span></div>
-    <h2 class="close__t rise">我希望交付的，不只是一个 AI 功能，<em>而是一套持续创造价值的工作方式。</em></h2>
-    <p class="close__p rise">
-      我的优势不是多年大型电商系统的经验，而是能够从一个具体问题开始，把需求拆清楚，快速动手做出可以验证的方案，再通过数据和真实使用反馈迭代。
-      如果加入公司，我会先选择一款重点耳机或音响产品，跑通一个真正有人使用的 AI 工作流，然后再逐步复制到更多 SKU 和部门。
-    </p>
-    <div class="close__act rise">
-      <a class="btn btn--primary" href="/limmingjie-ai-pm/resume/lim-mingjie-ai-pm-resume.pdf" target="_blank" rel="noopener">下载简历 <span class="btn__arrow">↓</span></a>
-      <a class="btn btn--ghost" href="https://wynn-lim.github.io/competitor-intel-workbench/" target="_blank" rel="noopener">两个工作台都在这里 ↗</a>
-    </div>
-  </div>
-</section>
-
-<footer class="foot">
-  <div class="shell foot__in">
-    <div class="foot__l"><b>李明杰</b> · AI 产品经理 · 2026</div>
-    <div class="foot__r">
+  <footer class="foot">
+    <span>李明杰 · AI 产品经理 · 2026</span>
+    <span style="display:flex;gap:18px;flex-wrap:wrap">
       <a href="https://wynn-lim.github.io/competitor-intel-workbench/workbench-app/" target="_blank" rel="noopener">AI 编导工作台</a>
       <a href="https://wynn-lim.github.io/competitor-intel-workbench/workbench/" target="_blank" rel="noopener">竞品情报工作台</a>
-      <a href="https://wynn-lim.github.io/competitor-intel-workbench/director/" target="_blank" rel="noopener">AI 编导 Agent PRD</a>
-    </div>
-  </div>
-</footer>
+      <a href="https://wynn-lim.github.io/competitor-intel-workbench/director/" target="_blank" rel="noopener">PRD</a>
+    </span>
+  </footer>
+</div>
 
-<script src="/limmingjie-ai-pm/app.js" defer></script>
+<script>
+(function(){
+"use strict";
+var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ── 时间码 ── */
+function tcFromScroll(){
+  var h = document.documentElement;
+  var max = h.scrollHeight - innerHeight;
+  var p = max > 0 ? scrollY / max : 0;
+  // 全片按 112 秒剪（首屏 18s + 各 clip 时长）
+  var total = 112, ms = p * total * 1000;
+  var s = Math.floor(ms/1000), f = Math.floor((ms%1000)/41.7);
+  return { str: String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")+":"+String(f).padStart(2,"0"), p: p };
+}
+
+var tlFill=document.getElementById("tlFill"), tlHead=document.getElementById("tlHead"),
+    tlTc=document.getElementById("tlTc"), hudTc=document.getElementById("hudTc"),
+    hudClip=document.getElementById("hudClip"), track=document.getElementById("tlTrack");
+
+/* ── 在时间轨上生成 clip 块 ── */
+var clips=[].slice.call(document.querySelectorAll("[data-clip]"));
+var DUR={ "C01":18,"C02":12,"C03":22,"C04":26,"C05":20,"C06":14 };
+var acc=0, marks=[];
+clips.forEach(function(c,i){
+  var start=acc, dur=DUR[c.dataset.clip]||10; acc+=dur;
+  marks.push({el:c,id:c.dataset.clip,name:c.dataset.name||"",start:start,dur:dur});
+  var b=document.createElement("div");
+  b.className="tl__clip"; b.dataset.clip=c.dataset.clip;
+  b.style.top=(start/112*100)+"%"; b.style.height=Math.max(dur/112*100,3)+"%";
+  b.innerHTML="<span>"+c.dataset.clip+"</span>";
+  b.title=c.dataset.clip+" · "+c.dataset.name;
+  b.addEventListener("click",function(){ c.scrollIntoView({behavior:reduce?"auto":"smooth"}); });
+  track.appendChild(b);
+});
+
+function onScroll(){
+  var t=tcFromScroll();
+  if(tlFill) tlFill.style.height=(t.p*100)+"%";
+  if(tlHead) tlHead.style.top=(t.p*100)+"%";
+  if(tlTc) tlTc.textContent=t.str;
+  if(hudTc) hudTc.textContent=t.str;
+  // 当前 clip
+  var sec=t.p*112, cur=marks[0];
+  marks.forEach(function(m){ if(sec>=m.start) cur=m; });
+  if(hudClip) hudClip.textContent=cur.id+" · "+cur.name;
+  document.querySelectorAll(".tl__clip").forEach(function(b){
+    b.classList.toggle("is-active", b.dataset.clip===cur.id);
+  });
+}
+addEventListener("scroll",onScroll,{passive:true});
+addEventListener("resize",onScroll);
+onScroll();
+
+/* ── 进场 ── */
+var rv=[].slice.call(document.querySelectorAll(".rv"));
+if("IntersectionObserver" in window && !reduce){
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} });
+  },{rootMargin:"0px 0px -6% 0px",threshold:.08});
+  rv.forEach(function(el){io.observe(el)});
+} else { rv.forEach(function(el){el.classList.add("in")}); }
+})();
+</script>
 </body>
 </html>
