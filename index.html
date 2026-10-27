@@ -1,560 +1,422 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>李明杰 · AI 产品经理｜作品集</title>
-<meta name="description" content="李明杰 · AI 产品经理。企业 AI 内容生产体系、AI 编导工作台、竞品情报系统与 3C 产品视频交付能力。" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>李明杰 · AI 产品经理 ｜ 求职作品集</title>
+<meta name="description" content="李明杰 · AI 产品经理（ToB / AIGC 解决方案）。竞品情报工作台、AI 编导工作台、AI 内容生产体系，全部线上可点开、数据真实可验证。">
 <style>
-/* ═══════════════════════════════════════════════════════════════
-   剪辑工程 · v5
-   v4 的问题：把两条产品视频当成主打，喧宾夺主——观感是"我只有这两个作品"。
-   v5 修正主次：
-     ① 首屏之后直接进「系统」章节（核心价值），产品视频降级为交付能力佐证
-     ② 视频从全屏黑场接管 → 收进素材箱，与抖音作品并列成「交付能力」一屏
-     ③ 章节顺序：系统 → 内容产能 → 交付能力 → 方法 → 收场
-   ═══════════════════════════════════════════════════════════════ */
 :root{
-  --bg:#0a0a0a; --bg2:#0f0f0f; --panel:#141414; --panel2:#1a1a1a;
-  --line:#222; --line2:#2c2c2c; --line3:#3a3a3a;
-  --ink:#f0efea; --ink2:#a3a099; --ink3:#6b6862; --ink4:#464340;
-  --amber:#ffb800; --amber-wash:rgba(255,184,0,.08); --amber-line:rgba(255,184,0,.28);
-  --red:#ff4d3d;
-  --mono:ui-monospace,SFMono-Regular,"SF Mono",Consolas,Menlo,"Courier New",monospace;
-  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --bg:#FAFAF8; --surface:#FFFFFF; --ink:#171B20; --ink2:#576069; --ink3:#8B939C;
+  --line:#E7E4DE; --line2:#D8D4CC;
+  --navy:#16324F; --navy-soft:#1F4468;
+  --amber:#B98A2F; --amber-deep:#96701F; --amber-wash:#F7F0E1; --amber-line:#E5D5B0;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.7;overflow-x:hidden}
-::selection{background:var(--amber);color:#000}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--amber);color:#fff}
 a{color:inherit;text-decoration:none}
 img,video{display:block;max-width:100%}
 
-/* ════════ 时间轴 ════════ */
-.timeline{position:fixed;left:0;top:0;bottom:0;width:74px;z-index:90;border-right:1px solid var(--line);background:var(--bg);display:flex;flex-direction:column}
-.tl__hd{padding:13px 0 10px;text-align:center;border-bottom:1px solid var(--line)}
-.tl__lbl{font-family:var(--mono);font-size:8px;letter-spacing:.16em;color:var(--ink4);text-transform:uppercase}
-.tl__tc{font-family:var(--mono);font-size:10.5px;color:var(--amber);margin-top:5px;font-variant-numeric:tabular-nums}
-.tl__track{flex:1;position:relative;padding:16px 0}
-.tl__rail{position:absolute;left:50%;top:16px;bottom:16px;width:1px;background:var(--line2)}
-.tl__fill{position:absolute;left:50%;top:16px;width:1px;background:var(--amber);transform:translateX(-50%)}
-.tl__head{position:absolute;left:50%;width:17px;height:10px;transform:translateX(-50%);z-index:2}
-.tl__head::before{content:"";position:absolute;inset:0;background:var(--amber);clip-path:polygon(0 0,100% 0,100% 60%,50% 100%,0 60%)}
-.tl__clip{position:absolute;left:50%;transform:translateX(-50%);width:32px;border:1px solid var(--line2);border-radius:2px;background:var(--panel);cursor:pointer;transition:border-color .15s,background .15s;display:flex;align-items:center;justify-content:center}
-.tl__clip span{font-family:var(--mono);font-size:7px;color:var(--ink4);letter-spacing:.04em}
-.tl__clip:hover{border-color:var(--line3)}
-.tl__clip.is-active{border-color:var(--amber);background:var(--amber-wash)}
-.tl__clip.is-active span{color:var(--amber)}
-.tl__ft{padding:9px 0;text-align:center;border-top:1px solid var(--line)}
-.tl__ft i{display:block;width:5px;height:5px;border-radius:50%;background:var(--red);margin:0 auto;animation:rec 1.6s infinite}
-@keyframes rec{0%,100%{opacity:1}50%{opacity:.15}}
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:50;background:rgba(250,250,248,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav__in{max-width:1080px;margin:0 auto;padding:0 28px;height:56px;display:flex;align-items:center;gap:28px}
+.nav__brand{font-weight:700;font-size:14.5px;letter-spacing:.02em;white-space:nowrap}
+.nav__brand i{font-style:normal;color:var(--amber);margin:0 7px}
+.nav__links{display:flex;gap:22px;font-size:13px;color:var(--ink2);margin-left:auto}
+.nav__links a{transition:color .15s;white-space:nowrap}
+.nav__links a:hover{color:var(--ink)}
+.nav__cta{background:var(--navy);color:#fff;font-size:12.5px;font-weight:600;padding:7px 15px;border-radius:5px;white-space:nowrap;transition:background .15s}
+.nav__cta:hover{background:var(--navy-soft)}
+@media(max-width:760px){.nav__links{display:none}.nav__in{gap:14px}}
 
-.main{margin-left:74px}
-.wrap{max-width:1100px;margin:0 auto;padding:0 40px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
 
-/* ════════ HUD ════════ */
-.hud{position:sticky;top:0;z-index:80;background:rgba(10,10,10,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:0 40px}
-.hud__in{max-width:1100px;margin:0 auto;height:44px;display:flex;align-items:center;gap:16px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--ink3)}
-.hud__brand{color:var(--ink);font-weight:700;font-size:11px;letter-spacing:0}
-.hud__brand b{color:var(--amber)}
-.hud__clip{color:var(--amber)}
-.hud__sp{flex:1}
-.hud__meta{display:flex;gap:13px}
-.hud__meta span{color:var(--ink4)}
-@media(max-width:760px){.hud__meta{display:none}.hud{padding:0 20px}}
+/* ── hero ── */
+.hero{padding:88px 0 56px;position:relative}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--line)}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber-deep);font-weight:700;text-transform:uppercase}
+.kicker::before{content:"";display:inline-block;width:22px;height:1px;background:var(--amber);vertical-align:4px;margin-right:9px}
+.hero h1{font-size:clamp(34px,5.4vw,58px);line-height:1.14;letter-spacing:-.02em;font-weight:800;margin:20px 0 0;max-width:16em}
+.hero h1 em{font-style:normal;color:var(--amber)}
+.hero__sub{margin-top:26px;font-size:16.5px;color:var(--ink2);max-width:44em;line-height:1.9}
+.hero__sub b{color:var(--ink);font-weight:600}
+.hero__cue{margin-top:34px;display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;padding:12px 22px;border-radius:6px;transition:all .16s;border:1px solid transparent}
+.btn--p{background:var(--navy);color:#fff}
+.btn--p:hover{background:var(--navy-soft);transform:translateY(-1px)}
+.btn--g{border-color:var(--line2);color:var(--ink);background:var(--surface)}
+.btn--g:hover{border-color:var(--ink3)}
+.hero__note{margin-top:22px;font-size:12.5px;color:var(--ink3);display:flex;align-items:center;gap:8px}
+.hero__note i{width:6px;height:6px;border-radius:50%;background:#3DA35D;display:inline-block}
 
-/* ════════ C01 监视器 ════════ */
-.monitor{min-height:100svh;display:flex;align-items:center;justify-content:center;position:relative;padding:60px 40px;overflow:hidden}
-.monitor__thirds{position:absolute;inset:0;pointer-events:none;opacity:.45}
-.monitor__thirds::before{content:"";position:absolute;left:33.33%;right:33.33%;top:0;bottom:0;border-left:1px solid var(--line);border-right:1px solid var(--line)}
-.monitor__thirds::after{content:"";position:absolute;top:33.33%;bottom:33.33%;left:0;right:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.monitor__safe{position:absolute;left:7%;right:7%;top:9%;bottom:9%;border:1px dashed var(--line2);pointer-events:none}
-.monitor__safe::after{content:"TITLE SAFE";position:absolute;left:0;top:-15px;font-family:var(--mono);font-size:7px;letter-spacing:.18em;color:var(--ink4)}
-.monitor__corner{position:absolute;width:15px;height:15px;border:1px solid var(--amber)}
-.monitor__corner--tl{left:18px;top:18px;border-right:none;border-bottom:none}
-.monitor__corner--tr{right:18px;top:18px;border-left:none;border-bottom:none}
-.monitor__corner--bl{left:18px;bottom:18px;border-right:none;border-top:none}
-.monitor__corner--br{right:18px;bottom:18px;border-left:none;border-top:none}
-.monitor__in{position:relative;z-index:2;max-width:840px;width:100%}
-.monitor__slate{display:flex;flex-wrap:wrap;gap:8px 20px;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--ink4);margin-bottom:28px;text-transform:uppercase}
-.monitor__slate b{color:var(--amber);font-weight:600}
-.monitor__title{font-size:clamp(38px,6.8vw,80px);line-height:1.02;letter-spacing:-.045em;font-weight:700}
-.monitor__title em{font-style:normal;color:var(--amber)}
-.monitor__title .ln{display:block;overflow:hidden}
-.monitor__title .ln>i{display:inline-block;font-style:normal;animation:up 1.05s cubic-bezier(.16,1,.3,1) both}
-.monitor__title .ln:nth-child(1)>i{animation-delay:.15s}
-.monitor__title .ln:nth-child(2)>i{animation-delay:.28s}
-.monitor__title .ln:nth-child(3)>i{animation-delay:.41s}
-@keyframes up{from{transform:translateY(108%)}to{transform:none}}
-.monitor__sub{margin-top:30px;font-size:clamp(14px,1.6vw,17px);color:var(--ink2);line-height:1.85;max-width:38em;animation:fade 1s .62s both}
-.monitor__sub b{color:var(--ink);font-weight:600}
-@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.monitor__cue{margin-top:34px;display:flex;flex-wrap:wrap;gap:10px;animation:fade 1s .8s both}
-.cue{font-family:var(--mono);font-size:11px;padding:9px 15px;border:1px solid var(--line2);border-radius:3px;color:var(--ink2);background:var(--panel);display:inline-flex;align-items:center;gap:8px;cursor:pointer}
-.cue--play{background:var(--amber);color:#000;border-color:var(--amber);font-weight:700;transition:opacity .15s}
-.cue--play:hover{opacity:.88}
-.cue--ghost{transition:border-color .15s,color .15s}
-.cue--ghost:hover{border-color:var(--ink3);color:var(--ink)}
-.cue i{width:0;height:0;border-left:6px solid currentColor;border-top:4px solid transparent;border-bottom:4px solid transparent}
-.monitor__hint{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);font-family:var(--mono);font-size:8.5px;letter-spacing:.22em;color:var(--ink4);display:flex;flex-direction:column;align-items:center;gap:6px}
-.monitor__hint i{width:1px;height:24px;background:linear-gradient(var(--ink4),transparent);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+/* ── metrics strip ── */
+.strip{display:grid;grid-template-columns:repeat(6,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin:44px 0 0}
+.strip>div{padding:20px 14px;text-align:center;border-right:1px solid var(--line)}
+.strip>div:last-child{border-right:none}
+.strip b{display:block;font-size:23px;font-weight:800;letter-spacing:-.02em;color:var(--navy);font-variant-numeric:tabular-nums;line-height:1.2}
+.strip b em{font-style:normal;color:var(--amber);font-size:16px;font-weight:700}
+.strip span{display:block;font-size:11.5px;color:var(--ink3);margin-top:6px}
+@media(max-width:880px){.strip{grid-template-columns:repeat(3,1fr)}.strip>div:nth-child(3){border-right:none}.strip>div:nth-child(-n+3){border-bottom:1px solid var(--line)}}
+@media(max-width:520px){.strip{grid-template-columns:repeat(2,1fr)}.strip>div{border-right:none;border-bottom:1px solid var(--line)}}
 
-/* ════════ 章节卡 ════════ */
-.card{min-height:58svh;display:flex;align-items:center;justify-content:center;background:var(--bg2);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
-.card::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,var(--amber),transparent);opacity:.5}
-.card__in{text-align:center;padding:56px 24px;max-width:760px}
-.card__no{font-family:var(--mono);font-size:clamp(52px,10vw,108px);font-weight:700;letter-spacing:-.05em;line-height:1;color:transparent;-webkit-text-stroke:1px var(--line3)}
-.card__k{font-family:var(--mono);font-size:10px;letter-spacing:.28em;color:var(--amber);margin-top:20px;text-transform:uppercase}
-.card__t{font-size:clamp(22px,3.4vw,36px);line-height:1.25;letter-spacing:-.03em;font-weight:700;margin-top:16px}
-.card__t em{font-style:normal;color:var(--amber)}
-.card__d{font-size:14.5px;color:var(--ink2);margin-top:18px;line-height:1.8;max-width:34em;margin-left:auto;margin-right:auto}
-.card__cue{margin-top:26px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+/* ── sections ── */
+section{padding:76px 0}
+section+section{border-top:1px solid var(--line)}
+.sec__head{max-width:44em;margin-bottom:44px}
+.sec__no{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--amber-deep);font-weight:700}
+.sec__t{font-size:clamp(24px,3.4vw,36px);line-height:1.25;letter-spacing:-.02em;font-weight:800;margin-top:14px}
+.sec__t em{font-style:normal;color:var(--amber)}
+.sec__d{margin-top:16px;font-size:15px;color:var(--ink2)}
 
-/* ════════ clip 面板 ════════ */
-.clip{padding:68px 0;border-bottom:1px solid var(--line);position:relative}
-.clip__bar{display:flex;align-items:center;gap:12px;margin-bottom:30px;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--ink4);text-transform:uppercase}
-.clip__bar .no{color:var(--amber);font-weight:700}
-.clip__bar .tc{color:var(--ink3)}
-.clip__bar .ln{flex:1;height:1px;background:var(--line)}
-.clip__t{font-size:clamp(23px,3.3vw,38px);line-height:1.14;letter-spacing:-.032em;font-weight:700;margin-bottom:15px;max-width:20em}
-.clip__t em{font-style:normal;color:var(--amber)}
-.clip__c{font-size:16px;color:var(--ink2);line-height:1.82;max-width:44em;padding-left:16px;border-left:2px solid var(--amber)}
-.clip__c b{color:var(--ink);font-weight:600}
+/* ── system cards ── */
+.sysgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:880px){.sysgrid{grid-template-columns:1fr}}
+.syscard{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:30px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .18s,box-shadow .18s}
+.syscard:hover{border-color:var(--amber-line);box-shadow:0 6px 28px rgba(22,50,79,.07)}
+.syscard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amber),transparent)}
+.syscard__tag{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--amber-deep);font-weight:700;text-transform:uppercase}
+.syscard__t{font-size:21px;font-weight:800;letter-spacing:-.015em;margin-top:12px;line-height:1.35}
+.syscard__d{font-size:13.5px;color:var(--ink2);margin-top:14px;line-height:1.85}
+.syscard__d b{color:var(--ink);font-weight:600}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:22px 0 0}
+.nums>div{background:var(--bg);padding:13px 6px;text-align:center}
+.nums b{display:block;font-size:18px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.nums span{font-size:10px;color:var(--ink3);display:block;margin-top:3px}
+.pipe{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:20px 0 0}
+.pipe__c{font-family:var(--mono);font-size:11px;background:var(--navy);color:#fff;padding:6px 11px;border-radius:5px;white-space:nowrap}
+.pipe__c--a{background:var(--amber-wash);color:var(--amber-deep);border:1px solid var(--amber-line)}
+.pipe__ar{color:var(--ink3);font-size:12px}
+.syscard__go{margin-top:auto;padding-top:22px}
+.link{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;color:var(--navy);border-bottom:1.5px solid var(--amber);padding-bottom:2px;transition:color .15s}
+.link:hover{color:var(--amber-deep)}
 
-/* ════════ 系统卡（主打，最大视觉权重） ════════ */
-.sys{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px}
-@media(max-width:880px){.sys{grid-template-columns:1fr}}
-.syscard{border:1px solid var(--line2);border-radius:6px;background:linear-gradient(160deg,var(--panel) 0%,var(--bg) 100%);padding:26px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .2s}
-.syscard:hover{border-color:var(--amber-line)}
-.syscard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--amber)}
-.syscard__k{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--amber);text-transform:uppercase}
-.syscard__t{font-size:20px;font-weight:700;letter-spacing:-.025em;margin-top:13px;line-height:1.3}
-.syscard__d{font-size:13.5px;color:var(--ink2);margin-top:14px;line-height:1.78}
-.syscard__nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:20px 0}
-.syscard__nums>div{background:var(--bg2);padding:11px 8px;text-align:center}
-.syscard__nums b{display:block;font-family:var(--mono);font-size:17px;font-weight:700;letter-spacing:-.03em;color:var(--amber)}
-.syscard__nums span{font-size:9.5px;color:var(--ink4)}
-.syscard__go{margin-top:auto;align-self:flex-start;font-family:var(--mono);font-size:10.5px;font-weight:700;color:#000;background:var(--amber);border-radius:3px;padding:9px 16px;transition:opacity .15s}
-.syscard__go:hover{opacity:.88}
+/* ── PRD wide card ── */
+.prd{margin-top:20px;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:28px 30px;display:grid;grid-template-columns:1.5fr 1fr;gap:30px;align-items:center}
+@media(max-width:880px){.prd{grid-template-columns:1fr;gap:20px}}
+.prd__t{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.prd__d{font-size:13.5px;color:var(--ink2);margin-top:10px;line-height:1.85}
+.prd__go{margin-top:16px}
+.prd__goals{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.prd__goals>div{border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:14px 10px;text-align:center}
+.prd__goals b{display:block;font-size:19px;font-weight:800;color:var(--amber-deep);font-variant-numeric:tabular-nums}
+.prd__goals span{font-size:10.5px;color:var(--ink3);display:block;margin-top:4px;line-height:1.5}
 
-/* ════════ 内容产能 ════════ */
-.dials{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-top:30px}
+/* ── dials ── */
+.dials{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 @media(max-width:880px){.dials{grid-template-columns:repeat(2,1fr)}}
-.dial{background:var(--panel);padding:22px 20px}
-.dial__v{font-family:var(--mono);font-size:clamp(22px,2.8vw,32px);font-weight:700;letter-spacing:-.04em;line-height:1.05}
-.dial__l{font-size:12.5px;color:var(--ink2);margin-top:9px;font-weight:600}
-.dial__s{font-size:11px;color:var(--ink4);margin-top:9px;line-height:1.6}
+.dial{background:var(--surface);padding:24px 22px}
+.dial__v{font-size:clamp(21px,2.6vw,29px);font-weight:800;letter-spacing:-.03em;color:var(--navy);line-height:1.1;font-variant-numeric:tabular-nums}
+.dial__v em{font-style:normal;color:var(--amber);font-size:.62em;font-weight:700}
+.dial__l{font-size:12.5px;color:var(--ink);margin-top:9px;font-weight:700}
+.dial__s{font-size:11px;color:var(--ink3);margin-top:7px;line-height:1.65}
 
-/* ════════ 交付能力（视频收在这里，不再全屏接管） ════════ */
-.deliv{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;margin-top:30px}
+/* ── accounts & douyin ── */
+.accs{margin-top:20px;display:grid;grid-template-columns:1.25fr 1fr;gap:20px}
+@media(max-width:880px){.accs{grid-template-columns:1fr}}
+.panel{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:26px 28px}
+.panel__t{font-size:14.5px;font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+.panel__t::before{content:"";width:8px;height:8px;background:var(--amber);border-radius:2px}
+.acc{margin-top:18px}
+.acc li{list-style:none;position:relative;padding-left:16px;margin-bottom:1.2mm;font-size:13.5px;color:var(--ink2)}
+.acc li::before{content:"—";position:absolute;left:0;color:var(--amber);font-weight:700}
+.acc li b{color:var(--ink);font-weight:600}
+.acc li .mono{font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+.dy li{list-style:none;margin-bottom:2mm}
+.dy a{display:flex;align-items:baseline;gap:10px;font-size:13px;color:var(--ink2);border-bottom:1px dashed var(--line2);padding-bottom:8px;transition:color .15s}
+.dy a:hover{color:var(--navy)}
+.dy .t{font-weight:700;color:var(--ink);font-size:13.5px}
+.dy .a{font-family:var(--mono);font-size:10.5px;color:var(--ink3);margin-left:auto;white-space:nowrap}
+
+/* ── delivery ── */
+.deliv{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:start}
 @media(max-width:880px){.deliv{grid-template-columns:1fr}}
-.deliv__vids{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:520px){.deliv__vids{grid-template-columns:1fr}}
-.dv{border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--panel)}
+.vids{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:520px){.vids{grid-template-columns:1fr}}
+.dv{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
 .dv video{width:100%;aspect-ratio:9/16;object-fit:cover;background:#000}
-.dv__bd{padding:12px 14px}
+.dv__bd{padding:13px 15px}
 .dv__t{font-size:12.5px;font-weight:700}
-.dv__s{font-family:var(--mono);font-size:9.5px;color:var(--ink4);margin-top:5px}
-.deliv__note{border:1px solid var(--line);border-radius:5px;background:var(--panel);padding:22px;display:flex;flex-direction:column}
-.deliv__note h4{font-size:14px;font-weight:700;letter-spacing:-.01em}
-.deliv__note p{font-size:12.5px;color:var(--ink2);margin-top:12px;line-height:1.78}
-.deliv__claim{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line2);font-family:var(--mono);font-size:10.5px;color:var(--amber);line-height:1.75}
-.deliv__claim b{color:var(--ink)}
+.dv__s{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:4px}
+.dnote{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:26px 28px}
+.dnote h4{font-size:14.5px;font-weight:800}
+.dnote p{font-size:13px;color:var(--ink2);margin-top:13px;line-height:1.85}
+.dnote__claim{margin-top:18px;padding-top:15px;border-top:1px dashed var(--line2);font-size:12px;color:var(--amber-deep);line-height:1.8}
+.dnote__claim b{color:var(--ink)}
 
-/* ════════ 作品轨 ════════ */
-.track{margin-top:30px;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel)}
-.track__hd{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--panel2);font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase}
-.track__hd .v1{color:var(--amber)}
-.track__r{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line);transition:background .18s}
-.track__r:last-child{border-bottom:none}
-.track__r:hover{background:var(--panel2)}
-.track__no{font-family:var(--mono);font-size:9.5px;color:var(--ink4);width:24px}
-.track__acc{font-family:var(--mono);font-size:9.5px;color:var(--amber);letter-spacing:.06em}
-.track__t{font-size:14.5px;font-weight:700;margin-top:5px;letter-spacing:-.012em;line-height:1.4}
-.track__d{font-size:12px;color:var(--ink3);margin-top:6px;line-height:1.65}
-.track__go{font-family:var(--mono);font-size:10px;color:var(--ink2);border:1px solid var(--line2);border-radius:3px;padding:8px 13px;white-space:nowrap;transition:border-color .15s,color .15s}
-.track__go:hover{border-color:var(--amber);color:var(--amber)}
-@media(max-width:640px){.track__r{grid-template-columns:1fr;gap:10px}.track__no{display:none}}
+/* ── method ── */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+@media(max-width:880px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.steps{grid-template-columns:1fr}}
+.step{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:22px 20px;position:relative}
+.step__no{font-family:var(--mono);font-size:10px;color:var(--amber-deep);font-weight:700;letter-spacing:.14em}
+.step__t{font-size:14px;font-weight:800;margin-top:10px;line-height:1.5;letter-spacing:-.01em}
+.step__d{font-size:12px;color:var(--ink3);margin-top:9px;line-height:1.7}
+.bound{margin-top:20px;border:1px solid var(--amber-line);background:var(--amber-wash);border-radius:12px;padding:24px 28px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+@media(max-width:640px){.bound{grid-template-columns:1fr}}
+.bound__k{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--amber-deep);font-weight:700;text-transform:uppercase;white-space:nowrap;padding-top:3px}
+.bound__t{font-size:13.5px;color:var(--ink2);line-height:1.85}
+.bound__t b{color:var(--ink)}
 
-/* ════════ 素材箱 ════════ */
-.bin{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-top:30px}
-@media(max-width:880px){.bin{grid-template-columns:1fr}}
-.bin__i{background:var(--panel);padding:20px;transition:background .18s;position:relative}
-.bin__i:hover{background:var(--panel2)}
-.bin__k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--amber);text-transform:uppercase}
-.bin__t{font-size:15px;font-weight:700;margin-top:11px;letter-spacing:-.012em;line-height:1.4}
-.bin__d{font-size:12.5px;color:var(--ink3);margin-top:10px;line-height:1.7}
-.bin__meta{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line2);display:grid;gap:5px}
-.bin__meta div{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px}
-.bin__meta .k{color:var(--ink4)}
-.bin__meta .v{color:var(--ink2)}
+/* ── footer ── */
+.foot{border-top:1px solid var(--line);padding:44px 0 56px}
+.foot__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px}
+@media(max-width:880px){.foot__grid{grid-template-columns:1fr;gap:22px}}
+.foot__n{font-size:19px;font-weight:800;letter-spacing:.04em}
+.foot__m{font-size:12.5px;color:var(--ink3);margin-top:10px;line-height:1.9}
+.foot__h{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink3);text-transform:uppercase;font-weight:700}
+.foot__l{margin-top:12px}
+.foot__l a{display:block;font-size:13px;color:var(--ink2);padding:5px 0;transition:color .15s}
+.foot__l a:hover{color:var(--amber-deep)}
+.foot__base{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink3);line-height:1.9}
 
-/* ════════ 收场 ════════ */
-.final{padding:104px 0 88px;position:relative;overflow:hidden}
-.final::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 20% 40%,var(--amber-wash),transparent 65%)}
-.final__in{position:relative;max-width:44em}
-.final__k{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
-.final__k span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--amber);border:1px solid var(--amber);border-radius:100px;padding:5px 13px}
-.final__t{font-size:clamp(26px,3.8vw,46px);line-height:1.16;letter-spacing:-.036em;font-weight:700}
-.final__t em{font-style:normal;color:var(--amber)}
-.final__p{font-size:16px;color:var(--ink2);margin-top:24px;line-height:1.85}
-.final__cue{margin-top:36px;display:flex;flex-wrap:wrap;gap:10px}
-
-.foot{border-top:1px solid var(--line);padding:26px 40px;display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--ink4)}
-.foot a{color:var(--ink3);transition:color .15s}
-.foot a:hover{color:var(--amber)}
-
-/* ════════ 进场 ════════ */
-.rv{opacity:0;transform:translateY(16px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
+/* ── reveal ── */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
 .rv.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){
-  .rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}
-  .monitor__title .ln>i,.monitor__sub,.monitor__cue{animation:none}
-  .tl__ft i,.monitor__hint i{animation:none}
-}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+@media print{.nav{display:none}section{padding:36px 0}}
 </style>
 </head>
 <body>
 
-<aside class="timeline">
-  <div class="tl__hd"><div class="tl__lbl">Timeline</div><div class="tl__tc" id="tlTc">00:00:00</div></div>
-  <div class="tl__track" id="tlTrack">
-    <div class="tl__rail"></div><div class="tl__fill" id="tlFill"></div><div class="tl__head" id="tlHead"></div>
+<nav class="nav">
+  <div class="nav__in">
+    <span class="nav__brand">李明杰<i>/</i>AI 产品经理</span>
+    <div class="nav__links">
+      <a href="#systems">系统</a>
+      <a href="#output">成果</a>
+      <a href="#delivery">交付</a>
+      <a href="#method">方法</a>
+    </div>
+    <a class="nav__cta" href="https://wynn-lim.github.io/limmingjie-ai-pm/resume/lim-mingjie-ai-pm-resume.pdf" target="_blank" rel="noopener">下载简历 ↓</a>
   </div>
-  <div class="tl__ft"><i></i></div>
-</aside>
+</nav>
 
-<div class="main">
-
-  <div class="hud"><div class="hud__in">
-    <span class="hud__brand">李明杰 <b>/</b> AI PM</span>
-    <span class="hud__clip" id="hudClip">C01 · 首屏</span>
-    <span class="hud__sp"></span>
-    <div class="hud__meta"><span id="hudTc">00:00:00</span><span>24 FPS</span><span>2026</span></div>
-  </div></div>
-
-  <!-- ════════ C01 监视器 ════════ -->
-  <section class="monitor" data-clip="C01" data-name="首屏" data-dur="16">
-    <div class="monitor__thirds"></div>
-    <div class="monitor__safe"></div>
-    <div class="monitor__corner monitor__corner--tl"></div>
-    <div class="monitor__corner monitor__corner--tr"></div>
-    <div class="monitor__corner monitor__corner--bl"></div>
-    <div class="monitor__corner monitor__corner--br"></div>
-    <div class="monitor__in">
-      <div class="monitor__slate">
-        <span>SCENE <b>01</b></span><span>TAKE <b>01</b></span>
-        <span>AI PRODUCT MANAGER</span><span>REEL <b>2026</b></span>
-      </div>
-      <h1 class="monitor__title">
-        <span class="ln"><i>把业务问题，</i></span>
-        <span class="ln"><i>做成<em>真能跑</em>的</i></span>
-        <span class="ln"><i>AI 工作流。</i></span>
-      </h1>
-      <p class="monitor__sub">
-        我不只使用 AI 生成内容。我看业务哪里重复、哪里低效，再决定用 <b>Prompt / Skill / Agent / RAG / API / RPA</b> 中的哪一种，然后亲手把它做成可以验证、可以复用、能持续变准的系统。
-      </p>
-      <div class="monitor__cue">
-        <a class="cue cue--play" href="#c03"><i></i>看系统</a>
-        <a class="cue cue--ghost" href="resume/lim-mingjie-ai-pm-resume.pdf" target="_blank" rel="noopener">下载简历 ↓</a>
-      </div>
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker rv">AI Product Manager · ToB / AIGC 解决方案</div>
+    <h1 class="rv">把业务问题，<br>做成<em>真能跑</em>的 AI 工作流。</h1>
+    <p class="hero__sub rv">近两年 ToB 企服（财税合规）经验，主导企业 AI 内容生产体系从 0 到 1；<b>独立设计并实现两个内部系统</b>——独角鲸竞品情报工作台与 AI 编导工作台。<b>全部线上可点开，数据真实可验证。</b></p>
+    <div class="hero__cue rv">
+      <a class="btn btn--p" href="https://wynn-lim.github.io/competitor-intel-workbench/workbench/" target="_blank" rel="noopener">打开竞品情报工作台 ↗</a>
+      <a class="btn btn--g" href="https://wynn-lim.github.io/competitor-intel-workbench/workbench-app/" target="_blank" rel="noopener">打开 AI 编导工作台 ↗</a>
+      <a class="btn btn--g" href="https://wynn-lim.github.io/limmingjie-ai-pm/resume/lim-mingjie-ai-pm-resume.pdf" target="_blank" rel="noopener">下载简历 ↓</a>
     </div>
-    <div class="monitor__hint"><span>SCROLL</span><i></i></div>
-  </section>
+    <div class="hero__note rv"><i></i>本站所有展示数据均为真实运行结果，非演示样例；效率与成本类数字为团队内部统计口径。</div>
+  </div>
+</header>
 
-  <!-- ════════ 章节卡 01 · 系统（先讲核心价值） ════════ -->
-  <section class="card" data-clip="S01" data-name="章节·系统" data-dur="4">
-    <div class="card__in">
-      <div class="card__no">01</div>
-      <div class="card__k">Systems · 我做的系统</div>
-      <h2 class="card__t">两个能点开的系统，<em>不是截图</em>。</h2>
-      <p class="card__d">面试时不用我讲，你直接点。里面全部是真实运行的数据。</p>
-      <div class="card__cue"><a class="cue cue--play" href="#c03"><i></i>点开看</a></div>
-    </div>
-  </section>
-
-  <!-- ════════ C02 系统卡（主打） ════════ -->
-  <section class="clip" data-clip="C02" data-name="系统" data-dur="20">
-    <div class="wrap">
-      <div class="clip__bar rv">
-        <span class="no">C02</span><span class="tc">00:16 → 00:36</span>
-        <span class="ln"></span><span class="dur">20s</span>
-      </div>
-      <h2 class="clip__t rv">把经验，<em>变成能跑的系统</em>。</h2>
-      <p class="clip__c rv">一个把编导经验拆成标准输入输出与质检节点，一个把竞品情报从人工盯梢变成采集 / 比对 / 判定闭环。<b>都是独立设计与实现。</b></p>
-
-      <div class="sys rv">
-        <div class="syscard">
-          <div class="syscard__k">Multi-Agent · 内容工作流</div>
-          <div class="syscard__t">AI 编导工作台</div>
-          <div class="syscard__d">3-Agent 管线：趋势雷达 → 爆款脚本 → 分镜生成。三层评测（代码规则 / LLM 评委 / 人工打分），生成后自评、低分自动重写、失败显式降级。点开任一案例，可见完整运行过程。</div>
-          <div class="syscard__nums">
-            <div><b>73</b><span>实跑案例</span></div>
-            <div><b>95</b><span>过程记录</span></div>
-            <div><b>81</b><span>评测报告</span></div>
-            <div><b>12</b><span>评测维度</span></div>
-          </div>
-          <a class="syscard__go" href="https://wynn-lim.github.io/competitor-intel-workbench/workbench-app/" target="_blank" rel="noopener">打开工作台 ↗</a>
-        </div>
-        <div class="syscard">
-          <div class="syscard__k">Internal System · 情报闭环</div>
-          <div class="syscard__t">独角鲸 · 竞品情报工作台</div>
-          <div class="syscard__d">138 个盯梢页面定时采集，抓回来的内容先做事实卡，再由人点头才进库。竞品档案、事件时间线、政策监控、话术库与 139 份选型对比文档。</div>
-          <div class="syscard__nums">
-            <div><b>137</b><span>竞品档案</span></div>
-            <div><b>120</b><span>情报事件</span></div>
-            <div><b>18</b><span>政策监控</span></div>
-            <div><b>66</b><span>应对话术</span></div>
-          </div>
-          <a class="syscard__go" href="https://wynn-lim.github.io/competitor-intel-workbench/workbench/" target="_blank" rel="noopener">打开工作台 ↗</a>
-        </div>
-      </div>
-
-      <div class="bin rv" style="margin-top:16px">
-        <div class="bin__i">
-          <div class="bin__k">Document</div>
-          <div class="bin__t">AI 编导 Agent PRD</div>
-          <div class="bin__d">7 章完整产品需求文档，第 7 章为工作台项目实证：流水线、评测闭环、校准闭环与诚实边界。</div>
-          <div class="bin__meta"><div><span class="k">章节</span><span class="v">7</span></div><div><span class="k">项目实证</span><span class="v">已附</span></div><div><span class="k">工具链</span><span class="v">可灵 / 即梦</span></div></div>
-          <div style="margin-top:14px"><a class="track__go" href="https://wynn-lim.github.io/competitor-intel-workbench/director/" target="_blank" rel="noopener">阅读 ↗</a></div>
-        </div>
-        <div class="bin__i">
-          <div class="bin__k">Capability</div>
-          <div class="bin__t">三个核心 Skill</div>
-          <div class="bin__d">MVP 阶段只做三个：产品资料整理（结构化知识卡）、多版本脚本生成（不同钩子与结构）、产品事实质检（参数 / 型号 / 绝对化表达）。</div>
-          <div class="bin__meta"><div><span class="k">输入</span><span class="v">产品手册 / 参数表</span></div><div><span class="k">输出</span><span class="v">知识卡 + 脚本 + 风险清单</span></div><div><span class="k">人工终审</span><span class="v">保留</span></div></div>
-        </div>
-        <div class="bin__i">
-          <div class="bin__k">Boundary</div>
-          <div class="bin__t">AI 与人的边界写清楚</div>
-          <div class="bin__d">AI 负责一致性（参数、品牌、字幕口播一致、违规表达）；人负责判断（事实终审、创意选择、品牌调性、是否发布）。</div>
-          <div class="bin__meta"><div><span class="k">机器先查</span><span class="v">5 类</span></div><div><span class="k">人工决定</span><span class="v">5 类</span></div><div><span class="k">原则</span><span class="v">边界要写清楚</span></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════ 章节卡 02 · 内容产能 ════════ -->
-  <section class="card" data-clip="S02" data-name="章节·产能" data-dur="4">
-    <div class="card__in">
-      <div class="card__no">02</div>
-      <div class="card__k">Output · 内容产能</div>
-      <h2 class="card__t">300+ 条内容，<em>是怎么被生产出来的</em>。</h2>
-      <p class="card__d">从割裂的个人手工制作，变成有流程、有模板、有质检的内容生产能力。</p>
-    </div>
-  </section>
-
-  <!-- ════════ C03 内容产能 ════════ -->
-  <section class="clip" id="c03" data-clip="C03" data-name="产能" data-dur="16">
-    <div class="wrap">
-      <div class="clip__bar rv">
-        <span class="no">C03</span><span class="tc">00:36 → 00:52</span>
-        <span class="ln"></span><span class="dur">16s</span>
-      </div>
-      <h2 class="clip__t rv">数字先落地，<em>每一个都带口径</em>。</h2>
-      <p class="clip__c rv">不是宣传语，是<b>可现场调取核对</b>的内部统计。成本与效率不写成经过财务审计的精确数据。</p>
-      <div class="dials rv">
-        <div class="dial"><div class="dial__v">300+</div><div class="dial__l">内容产出</div><div class="dial__s">任职期间累计发布的视频与图文（含企业与招商账号）</div></div>
-        <div class="dial"><div class="dial__v">3→0.5</div><div class="dial__l">单条周期（天）</div><div class="dial__s">选题确认到成片交付，不含审批等待</div></div>
-        <div class="dial"><div class="dial__v">100+</div><div class="dial__l">Prompt 模板</div><div class="dial__s">覆盖选题、脚本、分镜与质检场景</div></div>
-        <div class="dial"><div class="dial__v">约200%</div><div class="dial__l">产出效率提升</div><div class="dial__s">由单条周期缩短推算，团队内部统计，非财务审计数据</div></div>
-        <div class="dial"><div class="dial__v">1~2→3~4</div><div class="dial__l">单人日产出（条）</div><div class="dial__s">同一流程范围内的日产对比，团队内部统计</div></div>
-        <div class="dial"><div class="dial__v">约降70%</div><div class="dial__l">返修率</div><div class="dial__s">阶段性统计，无完整统计表，不作为审计数据</div></div>
-        <div class="dial"><div class="dial__v">4 条线</div><div class="dial__l">业务覆盖</div><div class="dial__s">企业品牌、研发费合规、全国招商与审计合规内容</div></div>
-        <div class="dial"><div class="dial__v">20+</div><div class="dial__l">AI 工具测评</div><div class="dial__s">实际使用与对比测试过的生成、剪辑、数字人、Agent 类工具</div></div>
-      </div>
-
-      <div class="track rv">
-        <div class="track__hd"><span class="v1">V1</span><span>已发布作品 · 抖音可直接看</span></div>
-        <div class="track__r">
-          <div class="track__no">01</div>
-          <div class="track__b">
-            <div class="track__acc">独角鲸 · 神州行（全国招商版）</div>
-            <div class="track__t">高企、IPO、税务稽查三张网接到同一个数据库</div>
-            <div class="track__d">独立完成选题策划 · 脚本 · AI 素材生成 · 剪辑成片。</div>
-          </div>
-          <a class="track__go" href="https://v.douyin.com/tvaTDnOoD5E/" target="_blank" rel="noopener">抖音看 ↗</a>
-        </div>
-        <div class="track__r">
-          <div class="track__no">02</div>
-          <div class="track__b">
-            <div class="track__acc">查策网</div>
-            <div class="track__t">查策 AI 科创平台正式上线</div>
-            <div class="track__d">策划 · 脚本 · 制作 · 发布。</div>
-          </div>
-          <a class="track__go" href="https://v.douyin.com/6r87UrzkyTM/" target="_blank" rel="noopener">抖音看 ↗</a>
-        </div>
-        <div class="track__r">
-          <div class="track__no">03</div>
-          <div class="track__b">
-            <div class="track__acc">独角鲸研发费合规指南</div>
-            <div class="track__t">IPO 研发费用合规全攻略</div>
-            <div class="track__d">选题 · 脚本 · 制作 · 发布。</div>
-          </div>
-          <a class="track__go" href="https://v.douyin.com/W8sCBsXM0c0/" target="_blank" rel="noopener">抖音看 ↗</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════ 章节卡 03 · 交付能力 ════════ -->
-  <section class="card" data-clip="S03" data-name="章节·交付" data-dur="4">
-    <div class="card__in">
-      <div class="card__no">03</div>
-      <div class="card__k">Delivery · 交付能力</div>
-      <h2 class="card__t">拿到产品资料，<em>就能出成片</em>。</h2>
-      <p class="card__d">参数理解 → 卖点取舍 → 结构设计 → 成片交付。下面是两条竖屏成片，方法可复制到任何 3C 品类。</p>
-    </div>
-  </section>
-
-  <!-- ════════ C04 交付能力（视频收进素材箱，不再全屏） ════════ -->
-  <section class="clip" data-clip="C04" data-name="交付" data-dur="14">
-    <div class="wrap">
-      <div class="clip__bar rv">
-        <span class="no">C04</span><span class="tc">00:52 → 01:06</span>
-        <span class="ln"></span><span class="dur">14s</span>
-      </div>
-      <h2 class="clip__t rv">产品视频交付，<em>不是只能做音响</em>。</h2>
-      <p class="clip__c rv">同一条需求给出两个切入版本：一个把参数翻译成场景，一个用产品本身的识别度抓人。<b>交付时两个版本都在。</b></p>
-
-      <div class="deliv rv">
-        <div class="deliv__vids">
-          <div class="dv">
-            <video controls playsinline preload="metadata" poster="video/speaker-01-poster.jpg">
-              <source src="video/speaker-01.mp4" type="video/mp4" />
-            </video>
-            <div class="dv__bd"><div class="dv__t">版本一 · 垂直场景切入</div><div class="dv__s">720×1280 · 15.07s</div></div>
-          </div>
-          <div class="dv">
-            <video controls playsinline preload="metadata" poster="video/speaker-02-poster.jpg">
-              <source src="video/speaker-02.mp4" type="video/mp4" />
-            </video>
-            <div class="dv__bd"><div class="dv__t">版本二 · 产品特写切入</div><div class="dv__s">720×1280 · 10.01s</div></div>
-          </div>
-        </div>
-        <div class="deliv__note">
-          <h4>怎么做的</h4>
-          <p>先读产品资料，把参数和卖点分开；判断哪个参数最容易被一眼看懂，作为前 3 秒的钩子；按「钩子 → 产品 → 场景 → 行动」组织结构；生成素材、剪辑、检查字幕与产品事实；最后输出可直接发布的竖屏成片。</p>
-          <div class="deliv__claim"><b>能力边界：</b>这条视频是一个比较简单的应用场景，能证明可以快速理解产品并完成内容交付，不代表已经建成了完整的内容系统。真正有价值的是把一次制作变成长期、规模化的生产能力——那部分在上面两个系统里。</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════ 章节卡 04 · 方法 ════════ -->
-  <section class="card" data-clip="S04" data-name="章节·方法" data-dur="4">
-    <div class="card__in">
-      <div class="card__no">04</div>
-      <div class="card__k">Method · 工作方法</div>
-      <h2 class="card__t">先判断价值，<em>再决定要不要上 Agent</em>。</h2>
-      <p class="card__d">一个 Prompt 能解决的事情，不做复杂 Agent。只有涉及多步骤判断、知识来源、跨系统执行或数据反馈时，才提高系统复杂度。</p>
-    </div>
-  </section>
-
-  <!-- ════════ C05 方法与边界 ════════ -->
-  <section class="clip" data-clip="C05" data-name="方法" data-dur="14">
-    <div class="wrap">
-      <div class="clip__bar rv">
-        <span class="no">C05</span><span class="tc">01:06 → 01:20</span>
-        <span class="ln"></span><span class="dur">14s</span>
-      </div>
-      <div class="bin rv">
-        <div class="bin__i"><div class="bin__k">STEP 01</div><div class="bin__t">进入业务，梳理当前流程</div><div class="bin__d">先把现在怎么做的搞清楚，不急着上工具。</div></div>
-        <div class="bin__i"><div class="bin__k">STEP 02</div><div class="bin__t">找出高频、重复、耗时、易错的环节</div><div class="bin__d">只在真正消耗人的地方动手。</div></div>
-        <div class="bin__i"><div class="bin__k">STEP 03</div><div class="bin__t">选 Prompt / Skill / Agent / RAG / API / RPA</div><div class="bin__d">能用简单方案解决的，不上复杂系统。</div></div>
-        <div class="bin__i"><div class="bin__k">STEP 04</div><div class="bin__t">先完成最小可用闭环</div><div class="bin__d">先跑通一次完整流程，再做扩展。</div></div>
-        <div class="bin__i"><div class="bin__k">STEP 05</div><div class="bin__t">用效率、质量、成本、使用率验证</div><div class="bin__d">没被真正用起来的方案不算落地。</div></div>
-        <div class="bin__i"><div class="bin__k">边界</div><div class="bin__t">做不到的，直接说做不到</div><div class="bin__d">没有长期负责过完整跨境电商数据系统——但方法、产品设计与把 MVP 做出来的执行能力可迁移。</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════ 章节卡 05 · 收场 ════════ -->
-  <section class="card" data-clip="S05" data-name="章节·收场" data-dur="4">
-    <div class="card__in">
-      <div class="card__no">05</div>
-      <div class="card__k">Closing · 收场</div>
-      <h2 class="card__t">我想交付的，<em>是一套工作方式</em>。</h2>
-      <p class="card__d">理解业务 · 快速验证 · 沉淀系统。</p>
-    </div>
-  </section>
-
-  <!-- ════════ C06 收场 ════════ -->
-  <section class="final" data-clip="C06" data-name="收场" data-dur="14">
-    <div class="wrap"><div class="final__in">
-      <div class="clip__bar rv" style="margin-bottom:26px">
-        <span class="no">C06</span><span class="tc">01:20 → 01:34</span>
-        <span class="ln"></span><span class="dur">14s</span>
-      </div>
-      <div class="final__k rv"><span>理解业务</span><span>快速验证</span><span>沉淀系统</span></div>
-      <h2 class="final__t rv">我希望交付的，不只是一个 AI 功能，<em>而是一套持续创造价值的工作方式。</em></h2>
-      <p class="final__p rv">如果加入公司，我会先选一款重点耳机或音响产品，跑通一个真正有人使用的 AI 工作流，再逐步复制到更多 SKU 和部门。</p>
-      <div class="final__cue rv">
-        <a class="cue cue--play" href="resume/lim-mingjie-ai-pm-resume.pdf" target="_blank" rel="noopener">下载简历 ↓</a>
-        <a class="cue cue--ghost" href="https://wynn-lim.github.io/competitor-intel-workbench/" target="_blank" rel="noopener">两个工作台 ↗</a>
-      </div>
-    </div></div>
-  </section>
-
-  <footer class="foot">
-    <span>李明杰 · AI 产品经理 · 2026</span>
-    <span style="display:flex;gap:18px;flex-wrap:wrap">
-      <a href="https://wynn-lim.github.io/competitor-intel-workbench/workbench-app/" target="_blank" rel="noopener">AI 编导工作台</a>
-      <a href="https://wynn-lim.github.io/competitor-intel-workbench/workbench/" target="_blank" rel="noopener">竞品情报工作台</a>
-      <a href="https://wynn-lim.github.io/competitor-intel-workbench/director/" target="_blank" rel="noopener">PRD</a>
-    </span>
-  </footer>
+<div class="wrap">
+  <div class="strip rv">
+    <div><b>137</b><span>竞品档案</span></div>
+    <div><b>73</b><span>实跑案例</span></div>
+    <div><b>300<em>+</em></b><span>内容产出</span></div>
+    <div><b>3<em>→</em>0.5</b><span>单条周期（天）</span></div>
+    <div><b>2700<em>+</em></b><span>新号单周涨粉</span></div>
+    <div><b>-70<em>%</em></b><span>内容返修率</span></div>
+  </div>
 </div>
+
+<!-- ── 系统 ── -->
+<section id="systems">
+  <div class="wrap">
+    <div class="sec__head rv">
+      <div class="sec__no">01 / SYSTEMS</div>
+      <h2 class="sec__t">两个能点开的系统，<em>不是截图。</em></h2>
+      <p class="sec__d">面试时不用我讲，你直接点。里面全部是真实运行的数据与完整的运行过程记录。</p>
+    </div>
+
+    <div class="sysgrid">
+      <div class="syscard rv">
+        <div class="syscard__tag">Internal System · 独立设计与实现</div>
+        <div class="syscard__t">独角鲸 · 竞品情报工作台</div>
+        <p class="syscard__d">研发费管理系统赛道的竞争情报系统：<b>138 个盯梢页面定时采集</b>，抓回的内容先拆成事实卡，<b>由人确认后才进库</b>——保证情报可追溯、可引用。竞品档案、事件时间线、政策监控、话术库与选型对比文档，直接支撑销售打单。</p>
+        <div class="nums">
+          <div><b>137</b><span>竞品档案</span></div>
+          <div><b>120</b><span>情报事件</span></div>
+          <div><b>18</b><span>政策监控</span></div>
+          <div><b>66</b><span>应对话术</span></div>
+        </div>
+        <div class="syscard__go"><a class="link" href="https://wynn-lim.github.io/competitor-intel-workbench/workbench/" target="_blank" rel="noopener">打开工作台 ↗</a></div>
+      </div>
+
+      <div class="syscard rv">
+        <div class="syscard__tag">Multi-Agent · 独立设计与实现</div>
+        <div class="syscard__t">AI 编导工作台</div>
+        <p class="syscard__d">3-Agent 内容生产管线，单 Agent 可重跑，运行过程全可视化（工具调用、token、耗时）；<b>三层评测 + 真实播放数据回流校准</b>，低分自动重写、失败显式降级。</p>
+        <div class="pipe">
+          <span class="pipe__c">趋势雷达</span><span class="pipe__ar">→</span>
+          <span class="pipe__c">爆款脚本</span><span class="pipe__ar">→</span>
+          <span class="pipe__c">分镜生成</span><span class="pipe__ar">→</span>
+          <span class="pipe__c pipe__c--a">评测 + 校准</span>
+        </div>
+        <div class="nums">
+          <div><b>73</b><span>实跑案例</span></div>
+          <div><b>95</b><span>过程记录</span></div>
+          <div><b>81</b><span>评测报告</span></div>
+          <div><b>12</b><span>评测维度</span></div>
+        </div>
+        <div class="syscard__go"><a class="link" href="https://wynn-lim.github.io/competitor-intel-workbench/workbench-app/" target="_blank" rel="noopener">打开工作台 ↗</a></div>
+      </div>
+    </div>
+
+    <div class="prd rv">
+      <div>
+        <div class="prd__t">AI 编导 Agent · 产品需求文档</div>
+        <p class="prd__d">7 章完整 PRD：需求背景 / 目标 / 市场与竞品分析 / 用户故事 / 功能需求 / AI 特定模块 / 项目实证。定位「创意策划 + 脚本编导」上游环节，与下游生成工具互补而非竞争。</p>
+        <div class="prd__go"><a class="link" href="https://wynn-lim.github.io/competitor-intel-workbench/director/" target="_blank" rel="noopener">阅读 PRD ↗</a></div>
+      </div>
+      <div class="prd__goals">
+        <div><b>-91.7%</b><span>创意策划时间<br>3h → 15min</span></div>
+        <div><b>60%+</b><span>方案采用率目标</span></div>
+        <div><b>4.0+</b><span>分镜可执行性<br>3 人盲评</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 成果 ── -->
+<section id="output">
+  <div class="wrap">
+    <div class="sec__head rv">
+      <div class="sec__no">02 / OUTPUT</div>
+      <h2 class="sec__t">300+ 条内容，<em>是怎么被生产出来的。</em></h2>
+      <p class="sec__d">从割裂的个人手工制作，变成有流程、有模板、有质检的内容生产能力。每个数字都可现场调取核对。</p>
+    </div>
+
+    <div class="dials rv">
+      <div class="dial"><div class="dial__v">300<em>+</em></div><div class="dial__l">内容产出</div><div class="dial__s">任职期间累计发布的视频与图文</div></div>
+      <div class="dial"><div class="dial__v">4 <em>条</em></div><div class="dial__l">业务线覆盖</div><div class="dial__s">企业品牌 / 研发费合规 / 全国招商 / 审计合规</div></div>
+      <div class="dial"><div class="dial__v">100<em>+</em></div><div class="dial__l">Prompt 模板</div><div class="dial__s">覆盖选题、脚本、分镜与质检场景</div></div>
+      <div class="dial"><div class="dial__v">3<em>→</em>0.5</div><div class="dial__l">单条周期（天）</div><div class="dial__s">选题确认到成片交付，不含审批等待</div></div>
+      <div class="dial"><div class="dial__v">1~2<em>→</em>3~4</div><div class="dial__l">单人日产（条）</div><div class="dial__s">同一流程范围内的日产对比</div></div>
+      <div class="dial"><div class="dial__v">+40<em>%</em></div><div class="dial__l">优质内容占比</div><div class="dial__s">A/B 测试与数据复盘驱动</div></div>
+      <div class="dial"><div class="dial__v">-70<em>%</em></div><div class="dial__l">内容返修率</div><div class="dial__s">质检标准与 SOP 上线后</div></div>
+      <div class="dial"><div class="dial__v">20<em>+</em></div><div class="dial__l">AI 工具测评</div><div class="dial__s">生成 / 剪辑 / 数字人 / Agent 类</div></div>
+    </div>
+
+    <div class="accs">
+      <div class="panel rv">
+        <div class="panel__t">操盘的账号矩阵</div>
+        <ul class="acc">
+          <li><b>独角鲸神州行</b>（全国招商版）<span class="mono">视频号 ID: sphE64vgZ5SOMQL</span></li>
+          <li><b>查策网</b> · 企业品牌与产品科普</li>
+          <li><b>独角鲸 · 研发费管理系统</b> · 产品内容</li>
+          <li><b>独角鲸研发费审计</b> · 合规警示</li>
+        </ul>
+        <ul class="acc" style="margin-top:14px">
+          <li>新号「独角鲸神州行」<b>上线一周关注者突破 2700</b>，单周收获 <b>10+ 条</b>私信咨询并转化为销售线索</li>
+          <li>零额外付费预算，纯自然流跑通 ToB 内容获客模型</li>
+        </ul>
+      </div>
+      <div class="panel rv">
+        <div class="panel__t">已发布作品 · 抖音可直接看</div>
+        <ul class="dy">
+          <li><a href="https://v.douyin.com/tvaTDnOoD5E/" target="_blank" rel="noopener"><span><span class="t">高企、IPO、税务稽查三张网接到同一个数据库</span><br><span style="font-size:12px">独角鲸 · 神州行（全国招商版）</span></span><span class="a">抖音 ↗</span></a></li>
+          <li><a href="https://v.douyin.com/6r87UrzkyTM/" target="_blank" rel="noopener"><span><span class="t">查策 AI 科创平台正式上线</span><br><span style="font-size:12px">查策网</span></span><span class="a">抖音 ↗</span></a></li>
+          <li><a href="https://v.douyin.com/W8sCBsXM0c0/" target="_blank" rel="noopener"><span><span class="t">IPO 研发费用合规全攻略</span><br><span style="font-size:12px">独角鲸研发费合规指南</span></span><span class="a">抖音 ↗</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 交付 ── -->
+<section id="delivery">
+  <div class="wrap">
+    <div class="sec__head rv">
+      <div class="sec__no">03 / DELIVERY</div>
+      <h2 class="sec__t">拿到产品资料，<em>就能出成片。</em></h2>
+      <p class="sec__d">参数理解 → 卖点取舍 → 结构设计 → 成片交付。同一条需求给出两个切入版本，方法可复制到任何标品品类。</p>
+    </div>
+
+    <div class="deliv">
+      <div class="vids rv">
+        <div class="dv">
+          <video controls playsinline preload="metadata" poster="video/speaker-01-poster.jpg">
+            <source src="video/speaker-01.mp4" type="video/mp4">
+          </video>
+          <div class="dv__bd"><div class="dv__t">版本一 · 垂直场景切入</div><div class="dv__s">720×1280 · 15.07s</div></div>
+        </div>
+        <div class="dv">
+          <video controls playsinline preload="metadata" poster="video/speaker-02-poster.jpg">
+            <source src="video/speaker-02.mp4" type="video/mp4">
+          </video>
+          <div class="dv__bd"><div class="dv__t">版本二 · 产品特写切入</div><div class="dv__s">720×1280 · 10.01s</div></div>
+        </div>
+      </div>
+      <div class="dnote rv">
+        <h4>怎么做的</h4>
+        <p>先读产品资料，把<b>参数和卖点分开</b>；判断哪个参数最容易被一眼看懂，作为前 3 秒的钩子；按「钩子 → 产品 → 场景 → 行动」组织结构；生成素材、剪辑、检查字幕与产品事实一致性；最后输出可直接发布的竖屏成片。</p>
+        <div class="dnote__claim"><b>能力边界：</b>产品视频是一个相对简单的应用场景，证明的是快速理解产品并完成内容交付的能力；真正有价值的是把一次制作变成长期、规模化的生产能力——那部分在上面两个系统里。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 方法 ── -->
+<section id="method">
+  <div class="wrap">
+    <div class="sec__head rv">
+      <div class="sec__no">04 / METHOD</div>
+      <h2 class="sec__t">先判断价值，<em>再决定要不要上 Agent。</em></h2>
+      <p class="sec__d">一个 Prompt 能解决的事情，不做复杂 Agent。只有涉及多步骤判断、知识来源、跨系统执行或数据反馈时，才提高系统复杂度。</p>
+    </div>
+
+    <div class="steps">
+      <div class="step rv"><div class="step__no">STEP 01</div><div class="step__t">进入业务，梳理当前流程</div><div class="step__d">先把现在怎么做的搞清楚，不急着上工具。</div></div>
+      <div class="step rv"><div class="step__no">STEP 02</div><div class="step__t">找高频、重复、耗时、易错的环节</div><div class="step__d">只在真正消耗人的地方动手。</div></div>
+      <div class="step rv"><div class="step__no">STEP 03</div><div class="step__t">选 Prompt / Skill / Agent / RAG / API</div><div class="step__d">能用简单方案解决的，不上复杂系统。</div></div>
+      <div class="step rv"><div class="step__no">STEP 04</div><div class="step__t">先完成最小可用闭环</div><div class="step__d">先跑通一次完整流程，再做扩展。</div></div>
+      <div class="step rv"><div class="step__no">STEP 05</div><div class="step__t">用效率、质量、成本、使用率验证</div><div class="step__d">没被真正用起来的方案不算落地。</div></div>
+    </div>
+
+    <div class="bound rv">
+      <div class="bound__k">Boundary · 能力边界</div>
+      <div class="bound__t">没有长期负责过完整跨境电商数据系统——但<b>方法、产品设计与把 MVP 做出来的执行能力可迁移</b>。AI 负责一致性（参数、品牌、字幕口播一致、违规表达），人负责判断（事实终审、创意选择、品牌调性、是否发布），这条边界在每个项目里都写清楚。</div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <div class="foot__n">李 明 杰</div>
+        <div class="foot__m">AI 产品经理 · ToB / AIGC 解决方案<br>深圳 · 15511024626 · lim-wynn@outlook.com</div>
+      </div>
+      <div>
+        <div class="foot__h">作品</div>
+        <div class="foot__l">
+          <a href="https://wynn-lim.github.io/competitor-intel-workbench/workbench/" target="_blank" rel="noopener">竞品情报工作台 ↗</a>
+          <a href="https://wynn-lim.github.io/competitor-intel-workbench/workbench-app/" target="_blank" rel="noopener">AI 编导工作台 ↗</a>
+          <a href="https://wynn-lim.github.io/competitor-intel-workbench/director/" target="_blank" rel="noopener">AI 编导 Agent PRD ↗</a>
+        </div>
+      </div>
+      <div>
+        <div class="foot__h">内容实证</div>
+        <div class="foot__l">
+          <a href="https://v.douyin.com/tvaTDnOoD5E/" target="_blank" rel="noopener">抖音 · 独角鲸神州行 ↗</a>
+          <a href="https://wynn-lim.github.io/limmingjie-ai-pm/resume/lim-mingjie-ai-pm-resume.pdf" target="_blank" rel="noopener">下载简历 ↓</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot__base">本站为 GitHub Pages 静态托管。需要 LLM Key 的交互功能（生成、重跑、人工评分、实拍回填）在本地运行时可用。数据口径：效率、成本类数字为团队内部统计，非财务审计数据。</div>
+  </div>
+</footer>
 
 <script>
 (function(){
 "use strict";
 var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-var TOTAL=112;
-function tc(){
-  var h=document.documentElement,max=h.scrollHeight-innerHeight;
-  var p=max>0?scrollY/max:0,ms=p*TOTAL*1000;
-  var s=Math.floor(ms/1000),f=Math.floor((ms%1000)/41.7);
-  return {str:String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")+":"+String(f).padStart(2,"0"),p:p,sec:p*TOTAL};
-}
-var tlFill=document.getElementById("tlFill"),tlHead=document.getElementById("tlHead"),
-    tlTc=document.getElementById("tlTc"),hudTc=document.getElementById("hudTc"),
-    hudClip=document.getElementById("hudClip"),track=document.getElementById("tlTrack");
-var clips=[].slice.call(document.querySelectorAll("[data-clip]"));
-var acc=0,marks=[];
-clips.forEach(function(c){
-  var start=acc,dur=+c.dataset.dur||8;acc+=dur;
-  marks.push({el:c,id:c.dataset.clip,name:c.dataset.name||"",start:start,dur:dur});
-  var b=document.createElement("div");
-  b.className="tl__clip";b.dataset.clip=c.dataset.clip;
-  b.style.top=(start/TOTAL*100)+"%";
-  b.style.height=Math.max(dur/TOTAL*100,2.5)+"%";
-  b.innerHTML="<span>"+c.dataset.clip+"</span>";
-  b.title=c.dataset.clip+" · "+c.dataset.name;
-  b.addEventListener("click",function(){c.scrollIntoView({behavior:reduce?"auto":"smooth"})});
-  track.appendChild(b);
-});
-function onScroll(){
-  var t=tc();
-  if(tlFill)tlFill.style.height=(t.p*100)+"%";
-  if(tlHead)tlHead.style.top=(t.p*100)+"%";
-  if(tlTc)tlTc.textContent=t.str;
-  if(hudTc)hudTc.textContent=t.str;
-  var cur=marks[0];
-  marks.forEach(function(m){if(t.sec>=m.start)cur=m});
-  if(hudClip)hudClip.textContent=cur.id+" · "+cur.name;
-  document.querySelectorAll(".tl__clip").forEach(function(b){
-    b.classList.toggle("is-active",b.dataset.clip===cur.id);
-  });
-}
-addEventListener("scroll",onScroll,{passive:true});
-addEventListener("resize",onScroll);onScroll();
 var rv=[].slice.call(document.querySelectorAll(".rv"));
 if("IntersectionObserver" in window&&!reduce){
   var io=new IntersectionObserver(function(es){
     es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}});
-  },{rootMargin:"0px 0px -6% 0px",threshold:.08});
+  },{rootMargin:"0px 0px -5% 0px",threshold:.06});
   rv.forEach(function(el){io.observe(el)});
 }else rv.forEach(function(el){el.classList.add("in")});
 })();
