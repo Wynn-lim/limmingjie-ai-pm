@@ -125,6 +125,12 @@ section+section{border-top:1px solid var(--line)}
 .acc li::before{content:"—";position:absolute;left:0;color:var(--amber);font-weight:700}
 .acc li b{color:var(--ink);font-weight:600}
 .acc li .mono{font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+.acc li .accd{display:block;font-size:12px;color:var(--ink3);line-height:1.7;margin-top:2px}
+.acc li .accd b{color:var(--amber-deep);font-weight:700}
+.accshot{margin-top:18px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg)}
+.accshot img{width:100%;display:block}
+.accshot__cap{font-size:11px;color:var(--ink3);padding:8px 12px;border-top:1px solid var(--line);font-family:var(--mono)}
+
 .dy li{list-style:none;margin-bottom:2mm}
 .dy a{display:flex;align-items:baseline;gap:10px;font-size:13px;color:var(--ink2);border-bottom:1px dashed var(--line2);padding-bottom:8px;transition:color .15s}
 .dy a:hover{color:var(--navy)}
@@ -300,17 +306,17 @@ section+section{border-top:1px solid var(--line)}
 
     <div class="accs">
       <div class="panel rv">
-        <div class="panel__t">操盘的账号矩阵</div>
+        <div class="panel__t">操盘的账号矩阵 · 4 个账号</div>
         <ul class="acc">
-          <li><b>独角鲸神州行</b>（全国招商版）<span class="mono">视频号 ID: sphE64vgZ5SOMQL</span></li>
-          <li><b>查策网</b> · 企业品牌与产品科普</li>
-          <li><b>独角鲸 · 研发费管理系统</b> · 产品内容</li>
-          <li><b>独角鲸研发费审计</b> · 合规警示</li>
+          <li><b>独角鲸神州行</b>（全国招商版）<span class="mono">视频号 ID: sphE64vgZ5SOMQL</span><br><span class="accd">独立负责选题策划 · 脚本 · AI 素材生成 · 剪辑成片。上线一周关注者破 <b>2700</b>，单周 <b>10+ 条</b>私信咨询转化为销售线索</span></li>
+          <li><b>查策网</b><span class="accd">企业品牌与产品科普 · 蓝V 认证主体「深圳市查策网络信息技术有限公司」· 内容负责人（策划 / 制作 / 运营）</span></li>
+          <li><b>独角鲸 · 研发费管理系统</b><span class="accd">产品内容 · 查策网旗下官方账号 · 内容负责人（编导与账号运营）</span></li>
+          <li><b>独角鲸研发费审计</b><span class="accd">合规警示 · 内容负责人（选题与制作 · 账号运营）</span></li>
         </ul>
-        <ul class="acc" style="margin-top:14px">
-          <li>新号「独角鲸神州行」<b>上线一周关注者突破 2700</b>，单周收获 <b>10+ 条</b>私信咨询并转化为销售线索</li>
-          <li>零额外付费预算，纯自然流跑通 ToB 内容获客模型</li>
-        </ul>
+        <div class="accshot">
+          <img src="assets/accounts/matrix.png" alt="账号矩阵截图：独角鲸-研发费用审计 / 查策网 / 独角鲸研发费合规指南" loading="lazy" />
+          <div class="accshot__cap">平台账号关联截图 · 独角鲸-研发费用审计 / 查策网（蓝V）/ 独角鲸研发费合规指南</div>
+        </div>
       </div>
       <div class="panel rv">
         <div class="panel__t">已发布作品 · 抖音可直接看</div>
